@@ -1,5 +1,5 @@
-import firebase from 'firebase'
-import {addDoc, collection, deleteDoc, doc, getDocs, getFirestore, setDoc, updateDoc} from "firebase/firestore"
+import firebase from 'firebase/compat/app';
+import {addDoc, collection, deleteDoc, doc, getDocs, getFirestore, setDoc, updateDoc, query} from "firebase/firestore"
 import {createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword} from "firebase/auth";
 
 const firebaseConfig = {
@@ -17,7 +17,7 @@ const firebaseConfig = {
 const db = getFirestore();
 const auth = getAuth();
 
-const signUp = async (email, password) => {
+export const signUp = async (email, password) => {
     createUserWithEmailAndPassword(auth, email, password)
         .then(async (userCredential) => {
             // Signed in
@@ -33,7 +33,7 @@ const signUp = async (email, password) => {
         });
 }
 
-const signIn = async (email, password) => {
+export const signIn = async (email, password) => {
     signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             // Signed in
@@ -70,3 +70,5 @@ const updatePrice = async (newPrice, alertid) => {
         target: newPrice
     })
 }
+
+export default firebase;
