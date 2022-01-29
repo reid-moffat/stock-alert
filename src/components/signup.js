@@ -11,16 +11,18 @@ class SignupForm extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleSubmit(event) {
+    handleSubmit = (event) => {
         // SUBMIT BUTTON EVENT HANDLER
         signUp(event.target.email.value, event.target.password.value)
-        this.setState({loggedin: true})
+        if(sessionStorage.getItem("uid") != null){
+            this.setState({loggedin: true})
+        }
         event.preventDefault();
     }
 
     render() {
         if (this.state.loggedin === true) {
-           
+           return <Navigate to='/stock-alert/home' />
         }
 
         return (
