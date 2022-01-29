@@ -1,14 +1,17 @@
 import React from 'react';
 
-import LoginForm from '../components/loginform';
-import SignupForm from '../components/signup';
+import LoginForm from '../components/loginform.js';
+import SignupForm from '../components/signup.js';
 
-class Login extends React.Component {
+class LoginSignup extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             signup: false
         };
+
+        this.toLogin = this.toLogin.bind(this);
+        this.toSignup = this.toSignup.bind(this);
     }
 
     toLogin = () => {
@@ -43,4 +46,4 @@ class Login extends React.Component {
     }
   }
 
-export default Login;
+export default LoginSignup;

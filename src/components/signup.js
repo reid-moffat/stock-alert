@@ -22,7 +22,7 @@ class SignupForm extends React.Component {
     
       render() {
         if (this.state.loggedin === true) {
-            return <Navigate to='/profile'/>
+           
         }
 
         return (
