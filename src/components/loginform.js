@@ -1,6 +1,6 @@
 import React from 'react';
-import { Navigate } from 'react-router';
 import { signIn } from '../firebase.js'
+import { Navigate } from 'react-router';
 
 class LoginForm extends React.Component {
     constructor(props) {
@@ -13,7 +13,7 @@ class LoginForm extends React.Component {
 
     handleSubmit = (event) => {
         // SUBMIT BUTTON EVENT HANDLER
-        signIn(event.email, event.password)
+        signIn(event.target.email.value, event.target.password.value)
         this.setState({loggedin: true})
         event.preventDefault();
     }

@@ -1,6 +1,6 @@
 import React from 'react';
-import { Navigate } from 'react-router';
 import { signUp } from '../firebase.js'
+import { Navigate } from 'react-router';
 
 class SignupForm extends React.Component {
     constructor(props) {
@@ -8,19 +8,17 @@ class SignupForm extends React.Component {
         this.state = {
             loggedin: false
         };
-
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleSubmit(event) {
         // SUBMIT BUTTON EVENT HANDLER
-        signUp(event.email, event.password)
+        signUp(event.target.email.value, event.target.password.value)
         this.setState({loggedin: true})
         event.preventDefault();
     }
 
-    
-      render() {
+    render() {
         if (this.state.loggedin === true) {
            
         }
@@ -32,7 +30,7 @@ class SignupForm extends React.Component {
             <form onSubmit={this.handleSubmit}>
                 <label>
                     email:
-                    <input type="text" name="email" />
+                    <input type="text" name="email" onSubm/>
                 </label>
                 <label>
                     password:
