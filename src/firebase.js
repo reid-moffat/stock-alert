@@ -1,23 +1,22 @@
-import firebase from 'firebase'
-import {addDoc, collection, deleteDoc, doc, getDocs, getFirestore, setDoc, updateDoc} from "firebase/firestore"
+import firebase from 'firebase/compat/app';
+import {addDoc, collection, deleteDoc, doc, getDocs, getFirestore, setDoc, updateDoc, query} from "firebase/firestore"
 import {createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword} from "firebase/auth";
 
 const firebaseConfig = {
-    apiKey: process.env.DB_API_KEY,
-    authDomain: process.env.AUTH_DOMAIN,
-    projectId: process.env.PROJECT_ID,
-    storageBucket: process.env.STORAGE_BUCKET,
-    messagingSenderId: process.env.MESSAGING_SENDER_ID,
-    appId: process.env.APP_ID,
-    measurementId: process.env.MEASUREMENT_ID
+    apiKey: "AIzaSyD8FI9mWCuCnt7AD3Rhupxy0JmNpA2BCH8",
+  authDomain: "stock-alert-3acd3.firebaseapp.com",
+  projectId: "stock-alert-3acd3",
+  storageBucket: "stock-alert-3acd3.appspot.com",
+  messagingSenderId: "775617567958",
+  appId: "1:775617567958:web:af9c038eddbdef25aa3d77",
+  measurementId: "G-T0LDF0MTP8"
 };
 
-!firebase.apps.length ? firebase.initializeApp(firebaseConfig) : firebase.app()
-
+const app = firebase.initializeApp(firebaseConfig)
 const db = getFirestore();
-const auth = getAuth();
+const auth = getAuth(app);
 
-const signUp = async (email, password) => {
+export const signUp = async (email, password) => {
     createUserWithEmailAndPassword(auth, email, password)
         .then(async (userCredential) => {
             // Signed in
@@ -29,22 +28,24 @@ const signUp = async (email, password) => {
         .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
-            // ..
+            console.log(errorCode)
+            console.log(errorMessage)
         });
 }
 
-const signIn = async (email, password) => {
+export const signIn = async (email, password) => {
     signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             // Signed in
             const user = userCredential.user;
             const uid = user.uid
             sessionStorage.setItem('uid', uid)
-            // ...
         })
         .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
+            console.log(errorCode)
+            console.log(errorMessage)
         });
 }
 
@@ -70,3 +71,5 @@ const updatePrice = async (newPrice, alertid) => {
         target: newPrice
     })
 }
+
+export default firebase;
