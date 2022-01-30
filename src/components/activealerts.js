@@ -20,11 +20,19 @@ class ActiveAlerts extends React.Component {
         console.log(this.state.list)
     }
 
+    navNew = () => {
+        this.setState({activealerts: false})
+    }
+
     render() {
         return (
             <>  
                 <div class="alert">
-                    <h2>My Alerts 🚨</h2>
+                    <div class="stock-row">
+                        <h2>My Alerts 🚨</h2>
+                        
+                    </div>
+                    
                     <div class="alerts-container">
                         {this.state.list.map((item, index) => (
                             <div class="stock">
@@ -39,6 +47,7 @@ class ActiveAlerts extends React.Component {
                             </div>
                         ))}
                     </div>
+                    {/*
                     <div class="alerts-container">
                         <div class="stock">
                             <div class="stock-row">
@@ -60,7 +69,8 @@ class ActiveAlerts extends React.Component {
                                 <span class="current">test Current Price: 312</span>
                             </div>
                         </div>
-                    </div>
+                    /div> 
+                    */}
                 </div>
             </>
         );

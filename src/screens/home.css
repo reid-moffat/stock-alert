@@ -67,7 +67,7 @@ h2 {
 }
 
 .stock {
-    background-color: #fff;
+    background-color: #fefefe;
     border-radius: 8px;
     width: 360px;
     margin: 10px;
@@ -119,11 +119,15 @@ h2 {
     font-weight: bold;
 }
 
-.secondary-btn {
+.new-btn {
+    width: 80px;
+    height: 16px;
     border: none;
-    background: #e4e4e4;
-    font-weight: 600;
-    color: #0E0E0E;
+    background: #6380D4;
+    border-radius: 8px;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 14px;
 }
 
 .btn, button {
