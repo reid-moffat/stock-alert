@@ -24,15 +24,21 @@ class ActiveAlerts extends React.Component {
         return (
             <>  
                 <div class="alert">
-                <h2>My Alerts 🚨</h2>
-                    {this.state.list.map((item, index) => (
-                        <div>
-                            Stock: {item.stock}<br/>
-                            Current Price: {item.current}<br/>
-                            Target Price: {item.target}<br/>
-                            Date Set: {item.date}<br/><br/>
-                        </div>
-                    ))}
+                    <h2>My Alerts 🚨</h2>
+                    <div class="alerts-container">
+                        {this.state.list.map((item, index) => (
+                            <div class="stock">
+                                <div class="stock-row">
+                                    <span class="stock-name">{item.stock}</span>
+                                    <span class="target">Target Price: {item.target}</span>
+                                </div>
+                                <div class="stock-row">
+                                    <span class="date">📅 {item.date}</span>
+                                    <span class="current">Current Price: {item.current}<br/></span>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
                     <div class="alerts-container">
                         <div class="stock">
                             <div class="stock-row">
