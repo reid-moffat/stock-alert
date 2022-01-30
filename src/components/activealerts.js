@@ -1,6 +1,5 @@
 import React from 'react';
-import { getAlerts } from '../firebase.js'
-import { Navigate } from 'react-router';
+import {getAlerts} from '../firebase.js'
 
 class ActiveAlerts extends React.Component {
     constructor(props) {
@@ -10,7 +9,7 @@ class ActiveAlerts extends React.Component {
         };
     }
 
-    async componentDidMount(){
+    async componentDidMount() {
         const test = await getAlerts(sessionStorage.getItem("uid"));
         console.log(test[0].test2)
         console.log(test[1].test2)
@@ -19,21 +18,21 @@ class ActiveAlerts extends React.Component {
         }
         console.log(this.state.list)
     }
-    
+
     render() {
         return (
             <>
-            {this.state.list.map((item, index) => (
-                <div>
-                    Stock: {item.stock}<br/>
-                    Current Price: {item.current}<br/>
-                    Target Price: {item.target}<br/>
-                    Date Set: {item.date}<br/><br/>
-                </div>
-            ))}
-        </>
+                {this.state.list.map((item, index) => (
+                    <div>
+                        Stock: {item.stock}<br/>
+                        Current Price: {item.current}<br/>
+                        Target Price: {item.target}<br/>
+                        Date Set: {item.date}<br/><br/>
+                    </div>
+                ))}
+            </>
         );
     }
-  }
+}
 
 export default ActiveAlerts

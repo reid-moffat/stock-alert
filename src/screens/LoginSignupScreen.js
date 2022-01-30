@@ -23,27 +23,27 @@ class LoginSignup extends React.Component {
     }
 
     render() {
-      return (
-        <>
-        <div class="login-left">
-            <div class="login-title">Test</div>
-        </div>
-        <div class="login-right">
-            {this.state.signup ? 
-                <>
-                    <SignupForm />
-                    <button class="login-line-button" onClick={this.toLogin}>login</button>
-                </>:
-                <>
-                    <LoginForm />
-                    <button class="login-line-button" onClick={this.toSignup}>signup</button>
-                </>
-            }
-        </div>
+        return (
+            <>
+                <div class="login-left">
+                    <div class="login-title">Test</div>
+                </div>
+                <div class="login-right">
+                    {this.state.signup ?
+                        <>
+                            <SignupForm/>
+                            <button class="login-line-button" onClick={this.toLogin}>login</button>
+                        </> :
+                        <>
+                            <LoginForm/>
+                            <button class="login-line-button" onClick={this.toSignup}>signup</button>
+                        </>
+                    }
+                </div>
 
-        </>
-      );
+            </>
+        );
     }
-  }
+}
 
 export default LoginSignup;

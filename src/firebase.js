@@ -1,15 +1,15 @@
 import firebase from 'firebase/compat/app';
-import {addDoc, collection, deleteDoc, doc, getDocs, getFirestore, setDoc, updateDoc, query} from "firebase/firestore"
+import {addDoc, collection, deleteDoc, doc, getDocs, getFirestore, setDoc, updateDoc} from "firebase/firestore"
 import {createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword} from "firebase/auth";
 
 const firebaseConfig = {
     apiKey: "AIzaSyD8FI9mWCuCnt7AD3Rhupxy0JmNpA2BCH8",
-  authDomain: "stock-alert-3acd3.firebaseapp.com",
-  projectId: "stock-alert-3acd3",
-  storageBucket: "stock-alert-3acd3.appspot.com",
-  messagingSenderId: "775617567958",
-  appId: "1:775617567958:web:af9c038eddbdef25aa3d77",
-  measurementId: "G-T0LDF0MTP8"
+    authDomain: "stock-alert-3acd3.firebaseapp.com",
+    projectId: "stock-alert-3acd3",
+    storageBucket: "stock-alert-3acd3.appspot.com",
+    messagingSenderId: "775617567958",
+    appId: "1:775617567958:web:af9c038eddbdef25aa3d77",
+    measurementId: "G-T0LDF0MTP8"
 };
 
 const app = firebase.initializeApp(firebaseConfig)
@@ -64,7 +64,7 @@ export const getAlerts = async (uid) => {
     querySnapshot.forEach((doc) => {
         // doc.data() is never undefined for query doc snapshots
         list.push(doc.data())
-      });
+    });
     return list
 }
 

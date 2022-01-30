@@ -8,8 +8,8 @@ class Home extends React.Component {
         this.state = {
             activealerts: true
         };
-    
-      }
+
+    }
 
     navAlerts = () => {
         this.setState({activealerts: true})
@@ -19,7 +19,7 @@ class Home extends React.Component {
         this.setState({activealerts: false})
     }
 
-    render(){
+    render() {
         console.log(this.state.activealerts)
         if (this.state.activealerts) {
             return (
@@ -31,8 +31,7 @@ class Home extends React.Component {
                     <ActiveAlerts/>
                 </>
             )
-        }
-        else{
+        } else {
             return (
                 <>
                     <div class="navbar">
@@ -42,7 +41,7 @@ class Home extends React.Component {
                     <NewAlert/>
                 </>
             )
-        }   
+        }
     }
 }
 
