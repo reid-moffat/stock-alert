@@ -1,15 +1,15 @@
 import firebase from 'firebase/compat/app';
-import {addDoc, collection, deleteDoc, doc, getDocs, getFirestore, setDoc, updateDoc, query} from "firebase/firestore"
+import {addDoc, collection, deleteDoc, doc, getDocs, getFirestore, setDoc, updateDoc} from "firebase/firestore"
 import {createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword} from "firebase/auth";
 
 const firebaseConfig = {
     apiKey: "AIzaSyD8FI9mWCuCnt7AD3Rhupxy0JmNpA2BCH8",
-  authDomain: "stock-alert-3acd3.firebaseapp.com",
-  projectId: "stock-alert-3acd3",
-  storageBucket: "stock-alert-3acd3.appspot.com",
-  messagingSenderId: "775617567958",
-  appId: "1:775617567958:web:af9c038eddbdef25aa3d77",
-  measurementId: "G-T0LDF0MTP8"
+    authDomain: "stock-alert-3acd3.firebaseapp.com",
+    projectId: "stock-alert-3acd3",
+    storageBucket: "stock-alert-3acd3.appspot.com",
+    messagingSenderId: "775617567958",
+    appId: "1:775617567958:web:af9c038eddbdef25aa3d77",
+    measurementId: "G-T0LDF0MTP8"
 };
 
 const app = firebase.initializeApp(firebaseConfig)
@@ -49,7 +49,7 @@ export const signIn = async (email, password) => {
         });
 }
 
-const newAlert = async (stock, current, target, date) => {
+export const newAlert = async (stock, current, target, date) => {
     await addDoc(collection(db, `users/${sessionStorage.getItem('uid')}/alerts`), {
         stock: stock,
         current: current,
@@ -58,15 +58,21 @@ const newAlert = async (stock, current, target, date) => {
     })
 }
 
-const getAlerts = async (uid) => {
-    return await getDocs(query(collection(db, `users/${uid}/alerts`)))
+export const getAlerts = async (uid) => {
+    const querySnapshot = await getDocs(collection(db, `users/${uid}/alerts`));
+    const list = [];
+    querySnapshot.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        list.push(doc.data())
+    });
+    return list
 }
 
-const deleteAlert = async (alertid) => {
+export const deleteAlert = async (alertid) => {
     await deleteDoc(doc(db, `users/${sessionStorage.getItem('uid')}/alerts/${alertid}`))
 }
 
-const updatePrice = async (newPrice, alertid) => {
+export const updatePrice = async (newPrice, alertid) => {
     await updateDoc(doc(db, `users/${sessionStorage.getItem('uid')}/alerts/${alertid}`), {
         target: newPrice
     })
