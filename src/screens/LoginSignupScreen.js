@@ -3,6 +3,7 @@ import React from 'react';
 import LoginForm from '../components/loginform.js';
 import SignupForm from '../components/signup.js';
 import Header from '../components/header.js';
+import "./home.css";
 
 class LoginSignup extends React.Component {
     constructor(props) {
