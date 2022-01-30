@@ -1,7 +1,6 @@
 import React from 'react';
 import {signIn} from '../firebase.js'
 import {Navigate} from 'react-router';
-import "./loginSignup.css";
 
 class LoginForm extends React.Component {
     constructor(props) {
