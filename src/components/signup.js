@@ -30,19 +30,16 @@ class SignupForm extends React.Component {
 
                 <div class="form-title">Sign up</div>
                 <form onSubmit={this.handleSubmit}>
-                    <label>
-                        email:
-                        <input type="text" name="email" onSubm/>
-                    </label>
-                    <label>
-                        password:
-                        <input type="text" name="password"/>
-                    </label>
-                    <label>
-                        confirm password:
-                        <input type="text" name="cpassword"/>
-                    </label>
-                    <input type="submit" value="Submit"/>
+                    <label>Email</label><br/>
+                    <input type="text" class="field" name="email" onSubm/>
+                    <br/>
+                    <label>Password</label><br/>
+                    <input type="text" class="field" name="password"/>
+                    <br/>
+                    <label>Confirm Password</label><br/>
+                    <input type="text" class="field" name="cpassword"/>
+                    <br/>
+                    <input class="form-btn btn" type="submit" value="Sign Up"/>
                 </form>
             </div>
         );

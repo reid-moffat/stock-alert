@@ -2,6 +2,8 @@ import React from 'react';
 
 import LoginForm from '../components/loginform.js';
 import SignupForm from '../components/signup.js';
+import Header from '../components/header.js';
+import "./loginSignup.css";
 
 class LoginSignup extends React.Component {
     constructor(props) {
@@ -25,22 +27,29 @@ class LoginSignup extends React.Component {
     render() {
         return (
             <>
-                <div class="login-left">
-                    <div class="login-title">Test</div>
+                <Header/>
+                <div class="row">
+                    <div class="login-left">
+                        <div class="login-title">Get alerts on your stocks!</div>
+                        <img
+                            alt="Stock Alert logo" className="stock-img"
+                            src="https://media.discordapp.net/attachments/833233857343782965/937336300728619088/stock_prices.png"
+                        />
+                        
+                    </div>
+                    <div class="login-right">
+                        {this.state.signup ?
+                            <>
+                                <SignupForm/>
+                                Already have an account? <button class="login-line-button" onClick={this.toLogin}>Login</button>
+                            </> :
+                            <>
+                                <LoginForm/>
+                                Don't have an account? <button class="login-line-button" onClick={this.toSignup}>Sign up</button>
+                            </>
+                        }
+                    </div>
                 </div>
-                <div class="login-right">
-                    {this.state.signup ?
-                        <>
-                            <SignupForm/>
-                            <button class="login-line-button" onClick={this.toLogin}>login</button>
-                        </> :
-                        <>
-                            <LoginForm/>
-                            <button class="login-line-button" onClick={this.toSignup}>signup</button>
-                        </>
-                    }
-                </div>
-
             </>
         );
     }

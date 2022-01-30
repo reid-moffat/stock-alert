@@ -30,15 +30,13 @@ class LoginForm extends React.Component {
 
                 <div class="form-title">Log in</div>
                 <form onSubmit={this.handleSubmit}>
-                    <label>
-                        email:
-                        <input type="text" name="email"/>
-                    </label>
-                    <label>
-                        password:
-                        <input type="text" name="password"/>
-                    </label>
-                    <input type="submit" value="GO"/>
+                    <label>Email</label><br/>
+                    <input type="text" class="field" name="email" onSubm/>
+                    <br/>
+                    <label>Password</label><br/>
+                    <input type="text" class="field" name="password"/>
+                    <br/>
+                    <input type="submit" class="form-btn btn" value="Login"/>
                 </form>
             </div>
         );
