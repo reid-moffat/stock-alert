@@ -34,7 +34,7 @@ class LoginForm extends React.Component {
                     <input type="text" class="field" name="email" onSubm/>
                     <br/>
                     <label>Password</label><br/>
-                    <input type="text" class="field" name="password"/>
+                    <input type="password" class="field" name="password"/>
                     <br/>
                     <input type="submit" class="form-btn btn" value="Login"/>
                 </form>

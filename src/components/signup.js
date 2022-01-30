@@ -34,10 +34,10 @@ class SignupForm extends React.Component {
                     <input type="text" class="field" name="email" onSubm/>
                     <br/>
                     <label>Password</label><br/>
-                    <input type="text" class="field" name="password"/>
+                    <input type="password" class="field" name="password"/>
                     <br/>
                     <label>Confirm Password</label><br/>
-                    <input type="text" class="field" name="cpassword"/>
+                    <input type="password" class="field" name="cpassword"/>
                     <br/>
                     <input class="form-btn btn" type="submit" value="Sign Up"/>
                 </form>
