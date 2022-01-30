@@ -10,7 +10,6 @@ class Home extends React.Component {
         this.state = {
             activealerts: true
         };
-
     }
 
     navAlerts = () => {

@@ -22,8 +22,9 @@ class ActiveAlerts extends React.Component {
 
     render() {
         return (
-            <>
+            <>  
                 <div class="alert">
+                <h2>My Alerts 🚨</h2>
                     {this.state.list.map((item, index) => (
                         <div>
                             Stock: {item.stock}<br/>
@@ -32,11 +33,27 @@ class ActiveAlerts extends React.Component {
                             Date Set: {item.date}<br/><br/>
                         </div>
                     ))}
-                    <div>
-                        test Stock: AAPC<br/>
-                        test Current Price: 312<br/>
-                        test Target Price: 344<br/>
-                        test Date Set: January 30, 2022<br/><br/>
+                    <div class="alerts-container">
+                        <div class="stock">
+                            <div class="stock-row">
+                                <span class="stock-name">AAPC</span>
+                                <span class="target">test Target Price: 344</span>
+                            </div>
+                            <div class="stock-row">
+                                <span class="date">📅 January 30, 2022</span>
+                                <span class="current">test Current Price: 312</span>
+                            </div>
+                        </div>
+                        <div class="stock">
+                            <div class="stock-row">
+                                <span class="stock-name">AAPC</span>
+                                <span class="target">test Target Price: 344</span>
+                            </div>
+                            <div class="stock-row">
+                                <span class="date">📅 January 30, 2022</span>
+                                <span class="current">test Current Price: 312</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </>

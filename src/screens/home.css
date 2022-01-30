@@ -48,6 +48,7 @@ h1 {
 
 h2 {
     font-weight: bolder;
+    margin-bottom: 10px;;
 }
 
 .alert {
@@ -60,13 +61,44 @@ h2 {
     font-size: 16px;
 }
 
+.alerts-container {
+    background-color: #EDEDED;
+    border-radius: 12px;
+}
+
+.stock {
+    background-color: #fff;
+    border-radius: 8px;
+    width: 360px;
+    margin: 10px;
+    padding: 10px;
+    box-shadow: 3px 8px 18px rgba(13, 11, 39, 0.12);
+}
+
+.stock-row {
+    display: flex;
+    justify-content: space-between;
+    line-height: 16px;
+    padding: 10px;
+}
+
+.stock-name {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.date, .current {
+    font-size: 14px;
+    color: #2E2E2E;
+}
+
 .new-alert {
     display: flex;
     flex-direction: column;
     min-width: 20vw;
     position: absolute;
     margin-left: 15vw;
-    margin-top: 50px;
+    margin-top: 20px;
     font-size: 16px;
 }
 
