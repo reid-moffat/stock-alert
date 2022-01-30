@@ -1,0 +1,20 @@
+* {
+    font-family: 'Open Sans';
+}
+
+login-title {
+  position: absolute;
+  width: 506px;
+  height: 43px;
+  left: 1158px;
+  top: 343px;
+
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 36px;
+  line-height: 54px;
+  text-align: center;
+
+  color: #000000;
+}
