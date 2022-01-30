@@ -24,7 +24,7 @@ class LoginForm extends React.Component {
         if (this.state.loggedin === true) {
             return <Navigate to='/stock-alert/home' />
         }
-
+        
         return (
             <div class="form">
 
