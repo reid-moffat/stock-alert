@@ -1,6 +1,8 @@
 import React from 'react';
 import ActiveAlerts from '../components/activealerts.js';
 import NewAlert from '../components/newalert.js';
+import Header from '../components/header.js';
+import "./home.css";
 
 class Home extends React.Component {
     constructor(props) {
@@ -24,21 +26,31 @@ class Home extends React.Component {
         if (this.state.activealerts) {
             return (
                 <>
-                    <div class="navbar">
-                        <div class="outline-button" onClick={this.navAlerts}>Alerts</div>
-                        <div class="outline-button" onClick={this.navNew}>New Alert</div>
+                    <Header/>
+                    <div class="row">
+                        <div class="navbar">
+                            <div class="outline-button active" onClick={this.navAlerts}>Alerts</div>
+                            <div class="outline-button" onClick={this.navNew}>New Alert</div>
+                        </div>
+                        <div class="content">
+                            <ActiveAlerts/>
+                        </div>
                     </div>
-                    <ActiveAlerts/>
                 </>
             )
         } else {
             return (
                 <>
-                    <div class="navbar">
-                        <div class="outline-button" onClick={this.navAlerts}>Alerts</div>
-                        <div class="outline-button" onClick={this.navNew}>New Alert</div>
+                    <Header/>
+                    <div class="row">
+                        <div class="navbar">
+                            <div class="outline-button" onClick={this.navAlerts}>Alerts</div>
+                            <div class="outline-button active" onClick={this.navNew}>New Alert</div>
+                        </div>
+                        <div class="content">
+                            <NewAlert/>
+                        </div>
                     </div>
-                    <NewAlert/>
                 </>
             )
         }

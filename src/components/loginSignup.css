@@ -1,0 +1,23 @@
+.input {
+    display: block;
+}
+
+.input span {
+    position: absolute;
+    z-index: 1;
+    cursor: text;
+    color: #4d4d4d;
+    padding: 7px;
+    line-height: 17px;
+    margin-left: 2px;
+}
+
+.input input {
+    width: 250px;
+    height: 30px;
+    z-index: 0;
+    padding: 6px;
+    margin: 0;
+    font: inherit;
+    line-height: 17px;
+}

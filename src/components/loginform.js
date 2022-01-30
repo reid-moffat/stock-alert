@@ -1,6 +1,7 @@
 import React from 'react';
 import {signIn} from '../firebase.js'
 import {Navigate} from 'react-router';
+import "./loginSignup.css";
 
 class LoginForm extends React.Component {
     constructor(props) {
@@ -30,12 +31,12 @@ class LoginForm extends React.Component {
 
                 <div class="form-title">Log in</div>
                 <form onSubmit={this.handleSubmit}>
-                    <label>
-                        email:
+                    <label class="input">
+                        Email
                         <input type="text" name="email"/>
                     </label>
-                    <label>
-                        password:
+                    <label class="input">
+                        Password
                         <input type="text" name="password"/>
                     </label>
                     <input type="submit" value="GO"/>
