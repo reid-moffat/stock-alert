@@ -1,5 +1,6 @@
 import React from 'react';
 import {getAlerts} from '../firebase.js'
+import "../screens/home.css";
 
 class ActiveAlerts extends React.Component {
     constructor(props) {
@@ -22,14 +23,22 @@ class ActiveAlerts extends React.Component {
     render() {
         return (
             <>
-                {this.state.list.map((item, index) => (
+                <div class="alert">
+                    {this.state.list.map((item, index) => (
+                        <div>
+                            Stock: {item.stock}<br/>
+                            Current Price: {item.current}<br/>
+                            Target Price: {item.target}<br/>
+                            Date Set: {item.date}<br/><br/>
+                        </div>
+                    ))}
                     <div>
-                        Stock: {item.stock}<br/>
-                        Current Price: {item.current}<br/>
-                        Target Price: {item.target}<br/>
-                        Date Set: {item.date}<br/><br/>
+                        test Stock: AAPC<br/>
+                        test Current Price: 312<br/>
+                        test Target Price: 344<br/>
+                        test Date Set: January 30, 2022<br/><br/>
                     </div>
-                ))}
+                </div>
             </>
         );
     }

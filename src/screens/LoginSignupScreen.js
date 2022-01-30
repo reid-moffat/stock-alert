@@ -2,6 +2,7 @@ import React from 'react';
 
 import LoginForm from '../components/loginform.js';
 import SignupForm from '../components/signup.js';
+import Header from '../components/header.js';
 
 class LoginSignup extends React.Component {
     constructor(props) {
@@ -25,6 +26,7 @@ class LoginSignup extends React.Component {
     render() {
         return (
             <>
+                <Header/>
                 <div class="login-left">
                     <div class="login-title">Test</div>
                 </div>

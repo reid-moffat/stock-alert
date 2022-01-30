@@ -1,0 +1,117 @@
+* {
+    font-family: 'Open Sans';
+}
+
+h1 {
+    font-weight: 1200;
+    font-size: 28px;
+}
+
+.row {
+    display: flex;
+    border-top: solid;
+    border-width: 1px;
+    border-color: #CECECE;
+    height: calc(100vh - 80px);
+    width: 100vw;
+}
+
+.navbar {
+    font-size: 18px;
+    font-weight: 550;
+    flex: 18%;
+    background: #ececec;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.outline-button {
+    text-align: center;
+    padding: 12px;
+    color: #2E2E2E;
+    transition-duration: 0.4s;
+}
+
+.outline-button:not(.active):hover {
+    background-color: #DDD;
+}
+
+.active {
+    background: #6380D4;
+    color: #fff;
+}
+
+.content {
+    flex: 82%;
+}
+
+h2 {
+    font-weight: bolder;
+}
+
+.alert {
+    display: flex;
+    flex-direction: column;
+    min-width: 20vw;
+    position: absolute;
+    margin-left: 15vw;
+    margin-top: 20px;
+    font-size: 16px;
+}
+
+.new-alert {
+    display: flex;
+    flex-direction: column;
+    min-width: 20vw;
+    position: absolute;
+    margin-left: 15vw;
+    margin-top: 50px;
+    font-size: 16px;
+}
+
+.btn {
+    min-width: 80px;
+    padding: 12px;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+}
+
+.add-btn {
+    width: 120px;
+    border: none;
+    background: #6380D4;
+    border-radius: 8px;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.secondary-btn {
+    border: none;
+    background: #e4e4e4;
+    font-weight: 600;
+    color: #0E0E0E;
+}
+
+.btn, button {
+    cursor: pointer;
+}
+
+.field {
+    width: 300px;
+    background: #E9E9E9;
+    color: #0E0E0E;
+    border: none;
+    font-size: 16px;
+    min-width: 100px;
+    padding: 12px;
+    margin-top: 8px;
+    margin-bottom: 16px;
+    display: inline-block;
+    border-radius: 8px;
+}
+
+.field:active, .field:focus {
+    outline: 0;
+}

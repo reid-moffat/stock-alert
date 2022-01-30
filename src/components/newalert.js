@@ -1,6 +1,7 @@
 import React from 'react';
 import {newAlert} from '../firebase.js';
 import getPrice from "../finnhub";
+import "../screens/home.css";
 
 class NewAlert extends React.Component {
     constructor(props) {
@@ -53,9 +54,14 @@ class NewAlert extends React.Component {
     render() {
         return (
             <>
-                <input type="text" name="stock" onChange={this.stockChange}/>
-                <input type="number" name="target" onChange={this.targetChange}/>
-                <input type="submit" value="Add New Stock Alert!" onClick={this.handleSubmit}/>
+                <div class="new-alert">
+                    <h1>New Alert</h1>
+                    <label>Stock Name</label>
+                    <input type="text" name="stock" class="field" onChange={this.stockChange}/>
+                    <label> Alert Price </label>
+                    <input type="number" name="target" class="field" onChange={this.targetChange}/>
+                    <input type="submit" class="add-btn btn" value="Add Alert" onClick={this.handleSubmit}/>
+                </div>
             </>
         );
     }
