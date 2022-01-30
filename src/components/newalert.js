@@ -42,7 +42,7 @@ class NewAlert extends React.Component {
 
     stockChange(event) {
         console.log(event.target.value)
-        var temp = event.target.value
+        const temp = event.target.value;
         this.setState({stock: temp})
     }
 

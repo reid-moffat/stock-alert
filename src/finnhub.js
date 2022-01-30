@@ -14,8 +14,8 @@ const getPrice = async (ticker) => {
     await axios.request({url: data}).then((response) => {
         console.log(response)
         resp = response.data["c"];
-        if (resp == "0") throw "Stock Ticker Invalid";
-        if (response.data["status_code"] == "204") throw "Too Many API Calls";
+        if (resp === "0") throw "Stock Ticker Invalid";
+        if (response.data["status_code"] === "204") throw "Too Many API Calls";
     }).catch(error => {
         throw "Error getting stock price: " + error.message;
     });

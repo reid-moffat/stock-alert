@@ -1,4 +1,3 @@
-import stock from './stock.png';
 import './App.css';
 import {
   BrowserRouter,

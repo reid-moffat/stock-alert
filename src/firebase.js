@@ -60,7 +60,7 @@ export const newAlert = async (stock, current, target, date) => {
 
 export const getAlerts = async (uid) => {
     const querySnapshot = await getDocs(collection(db, `users/${uid}/alerts`));
-    var list = []
+    const list = [];
     querySnapshot.forEach((doc) => {
         // doc.data() is never undefined for query doc snapshots
         list.push(doc.data())
