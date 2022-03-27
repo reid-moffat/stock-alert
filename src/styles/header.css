@@ -1,0 +1,13 @@
+.logo {
+    width: 180px;
+    height: auto;
+    margin-left: 35px;
+}
+
+.header {
+    width: 100vw;
+    height: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}

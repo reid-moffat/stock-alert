@@ -1,9 +1,9 @@
 import React from 'react';
 
-import LoginForm from '../components/loginform.js';
+import LoginForm from '../components/loginForm.js';
 import SignupForm from '../components/signup.js';
 import Header from '../components/header.js';
-import "./loginSignup.css";
+import "../styles/loginSignup.css";
 
 class LoginSignup extends React.Component {
     constructor(props) {
@@ -35,17 +35,19 @@ class LoginSignup extends React.Component {
                             alt="Stock Alert logo" className="stock-img"
                             src="https://media.discordapp.net/attachments/833233857343782965/937336300728619088/stock_prices.png"
                         />
-                        
+
                     </div>
                     <div class="login-right">
                         {this.state.signup ?
                             <>
                                 <SignupForm/>
-                                Already have an account? <button class="login-line-button" onClick={this.toLogin}>Login</button>
+                                Already have an account? <button class="login-line-button"
+                                                                 onClick={this.toLogin}>Login</button>
                             </> :
                             <>
                                 <LoginForm/>
-                                Don't have an account? <button class="login-line-button" onClick={this.toSignup}>Sign up</button>
+                                Don't have an account? <button class="login-line-button" onClick={this.toSignup}>Sign
+                                up</button>
                             </>
                         }
                     </div>

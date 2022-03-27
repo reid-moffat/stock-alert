@@ -1,5 +1,5 @@
 import React from 'react';
-import {signUp} from '../firebase.js'
+import {signUp} from '../backend/firebase.js'
 import {Navigate} from 'react-router';
 
 class SignupForm extends React.Component {
