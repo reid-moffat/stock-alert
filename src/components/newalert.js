@@ -1,6 +1,6 @@
 import React from 'react';
 import {newAlert} from '../firebase.js';
-import getPrice from "../finnhub";
+import getPrice from "../backend/finnhub";
 import "../screens/home.css";
 
 class NewAlert extends React.Component {
