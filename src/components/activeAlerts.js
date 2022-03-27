@@ -26,13 +26,13 @@ class ActiveAlerts extends React.Component {
 
     render() {
         return (
-            <>  
+            <>
                 <div class="alert">
                     <div class="stock-row">
                         <h2>My Alerts 🚨</h2>
-                        
+
                     </div>
-                    
+
                     <div class="alerts-container">
                         {this.state.list.map((item, index) => (
                             <div class="stock">
