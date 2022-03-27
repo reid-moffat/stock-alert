@@ -1,7 +1,7 @@
 import React from 'react';
 import {newAlert} from '../backend/firebase.js';
 import getPrice from "../backend/finnhub";
-import "../screens/home.css";
+import "../styles/home.css";
 
 class NewAlert extends React.Component {
     constructor(props) {

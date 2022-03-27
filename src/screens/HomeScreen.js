@@ -2,7 +2,7 @@ import React from 'react';
 import ActiveAlerts from '../components/activealerts.js';
 import NewAlert from '../components/newalert.js';
 import Header from '../components/header.js';
-import "./home.css";
+import "../styles/home.css";
 
 class Home extends React.Component {
     constructor(props) {

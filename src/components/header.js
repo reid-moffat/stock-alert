@@ -1,5 +1,5 @@
 import React from 'react';
-import './header.css';
+import '../styles/header.css';
 //import { Navigate } from 'react-router';
 
 class Header extends React.Component {

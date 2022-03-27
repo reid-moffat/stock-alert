@@ -1,6 +1,6 @@
 import React from 'react';
 import {getAlerts} from '../backend/firebase.js'
-import "../screens/home.css";
+import "../styles/home.css";
 
 class ActiveAlerts extends React.Component {
     constructor(props) {
