@@ -19,7 +19,7 @@ class NewAlert extends React.Component {
     getPrice = async (ticker) => {
         // url for stock data
 
-        const data = `https://finnhub.io/api/v1/quote?symbol=${ticker}&token=c7qcivqad3i9it665jk0`;
+        const data = `https://finnhub.io/api/v1/quote?symbol=${ticker}&token=${process.env.REACT_APP_STOCK_API_KEY}`;
         console.log(ticker)
         // Get and return the stock price
         let resp = "";
