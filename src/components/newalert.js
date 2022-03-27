@@ -1,5 +1,5 @@
 import React from 'react';
-import {newAlert} from '../firebase.js';
+import {newAlert} from '../backend/firebase.js';
 import getPrice from "../backend/finnhub";
 import "../screens/home.css";
 
