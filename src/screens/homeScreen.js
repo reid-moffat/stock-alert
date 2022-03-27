@@ -1,6 +1,6 @@
 import React from 'react';
-import ActiveAlerts from '../components/activealerts.js';
-import NewAlert from '../components/newalert.js';
+import ActiveAlerts from '../components/activeAlerts.js';
+import NewAlert from '../components/newAlert.js';
 import Header from '../components/header.js';
 import "../styles/home.css";
 

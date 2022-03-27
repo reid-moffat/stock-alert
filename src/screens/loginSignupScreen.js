@@ -1,6 +1,6 @@
 import React from 'react';
 
-import LoginForm from '../components/loginform.js';
+import LoginForm from '../components/loginForm.js';
 import SignupForm from '../components/signup.js';
 import Header from '../components/header.js';
 import "../styles/loginSignup.css";
