@@ -24,6 +24,25 @@ class LoginSignup extends React.Component {
         this.setState({signup: true});
     }
 
+    // Renders login/sign up form based on state
+    renderAuthForm = () => {
+        if (this.state.signup) {
+            return (
+                <>
+                    <SignupForm/>
+                    Already have an account? <button class="login-line-button" onClick={this.toLogin}>Login</button>
+                </>
+            );
+        }
+
+        return (
+            <>
+                <LoginForm/>
+                Don't have an account? <button class="login-line-button" onClick={this.toSignup}>Sign up</button>
+            </>
+        );
+    }
+
     render() {
         return (
             <>
@@ -37,20 +56,7 @@ class LoginSignup extends React.Component {
                         />
 
                     </div>
-                    <div class="login-right">
-                        {this.state.signup ?
-                            <>
-                                <SignupForm/>
-                                Already have an account? <button class="login-line-button"
-                                                                 onClick={this.toLogin}>Login</button>
-                            </> :
-                            <>
-                                <LoginForm/>
-                                Don't have an account? <button class="login-line-button" onClick={this.toSignup}>Sign
-                                up</button>
-                            </>
-                        }
-                    </div>
+                    <div class="login-right">{this.renderAuthForm()}</div>
                 </div>
             </>
         );
