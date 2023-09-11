@@ -11,5 +11,6 @@
 // https://firebase.google.com/docs/functions/typescript
 
 import { helloWorld2 } from './alertManagement';
+import { createAccount} from "./auth";
 
-export { helloWorld2 };
+export { helloWorld2, createAccount };
