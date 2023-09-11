@@ -21,38 +21,21 @@ class Home extends React.Component {
     }
 
     render() {
-        console.log(this.state.activealerts)
-        if (this.state.activealerts) {
-            return (
-                <>
-                    <Header/>
-                    <div class="row">
-                        <div class="navbar">
-                            <div class="outline-button active" onClick={this.navAlerts}>Alerts</div>
-                            <div class="outline-button" onClick={this.navNew}>New Alert</div>
-                        </div>
-                        <div class="content">
-                            <ActiveAlerts/>
-                        </div>
+        const body = this.state.activealerts ? <ActiveAlerts/> : <NewAlert/>;
+        return (
+            <>
+                <Header/>
+                <div class="row">
+                    <div class="navbar">
+                        <div class={"outline-button" + this.state.activealerts ? " active" : ""} onClick={this.navAlerts}>Alerts</div>
+                        <div class={"outline-button" + this.state.activealerts ? "" : " active"} onClick={this.navNew}>New Alert</div>
                     </div>
-                </>
-            )
-        } else {
-            return (
-                <>
-                    <Header/>
-                    <div class="row">
-                        <div class="navbar">
-                            <div class="outline-button" onClick={this.navAlerts}>Alerts</div>
-                            <div class="outline-button active" onClick={this.navNew}>New Alert</div>
-                        </div>
-                        <div class="content">
-                            <NewAlert/>
-                        </div>
+                    <div class="content">
+                        {body}
                     </div>
-                </>
-            )
-        }
+                </div>
+            </>
+        )
     }
 }
 
