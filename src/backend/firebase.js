@@ -25,12 +25,12 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 const db = getFirestore();
-const auth = getAuth(app);
+const auth = firebase.auth();
 
 export const signUp = async (email, password) => {
     const addMessage = httpsCallable(getFunctions(), 'createAccount');
     const rsp = await addMessage({ email, password });
-    console.log(`Sign up response: ${rsp}`);
+    console.log(`Sign up response: ${JSON.stringify(rsp, null, 4)}`);
 
     /*
     createUserWithEmailAndPassword(auth, email, password)
@@ -51,19 +51,8 @@ export const signUp = async (email, password) => {
 }
 
 export const signIn = async (email, password) => {
-    signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            // Signed in
-            const user = userCredential.user;
-            const uid = user.uid
-            sessionStorage.setItem('uid', uid)
-        })
-        .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            console.log(errorCode)
-            console.log(errorMessage)
-        });
+    const result = await signInWithEmailAndPassword(auth, email, password);
+    console.log("Sign in result: " + JSON.stringify(result, null, 4));
 }
 
 export const newAlert = async (stock, current, target, date) => {
