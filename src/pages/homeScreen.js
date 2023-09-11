@@ -21,14 +21,17 @@ class Home extends React.Component {
     }
 
     render() {
+        const inactive = "outline-button";
+        const active = inactive + " active";
         const body = this.state.activealerts ? <ActiveAlerts/> : <NewAlert/>;
+
         return (
             <>
                 <Header/>
                 <div class="row">
                     <div class="navbar">
-                        <div class={"outline-button" + this.state.activealerts ? " active" : ""} onClick={this.navAlerts}>Alerts</div>
-                        <div class={"outline-button" + this.state.activealerts ? "" : " active"} onClick={this.navNew}>New Alert</div>
+                        <div class={this.state.activealerts ? active : inactive} onClick={this.navAlerts}>Alerts</div>
+                        <div class={this.state.activealerts ? inactive : active} onClick={this.navNew}>New Alert</div>
                     </div>
                     <div class="content">
                         {body}
