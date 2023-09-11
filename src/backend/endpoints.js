@@ -17,3 +17,8 @@ export const getAlerts = async () => {
     const getAlerts = httpsCallable(getFunctions(), 'getAlerts');
     return (await getAlerts()).data;
 }
+
+export const addAlert = async (data) => {
+    const newAlert = httpsCallable(getFunctions(), 'addAlert');
+    return (await newAlert(data)).data;
+}
