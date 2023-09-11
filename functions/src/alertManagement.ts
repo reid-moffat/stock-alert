@@ -1,9 +1,15 @@
 //import * as logger from "firebase-functions/lib/logger";
 import { onCall } from "firebase-functions/v2/https";
+import {db} from "./helpers";
 
-const helloWorld2 = onCall((request) => {
-    //logger.info("Hello from helloWorld function", {structuredData: true});
-    return "Hello from Firebase!";
+const getAlerts = onCall((request) => {
+
+    return db.collection('jobs')
+        // @ts-ignore
+        .where('userId', '==', request.auth.uid)
+        .get()
+        .then(async (query) => query.empty? [] : query.docs)
+        .catch((err) => `Error getting alerts: ${err}`);
 });
 
-export { helloWorld2 };
+export { getAlerts };

@@ -1,5 +1,5 @@
 import React from 'react';
-import {getAlerts} from '../backend/firebase.js'
+import {getAlerts} from '../backend/endpoints.js'
 import "../styles/home.css";
 
 class ActiveAlerts extends React.Component {
@@ -11,9 +11,8 @@ class ActiveAlerts extends React.Component {
     }
 
     async componentDidMount() {
-        const test = await getAlerts(sessionStorage.getItem("uid"));
-        console.log(test[0].test2)
-        console.log(test[1].test2)
+        const test = await getAlerts();
+        console.log('After results: ' + JSON.stringify(test, null, 4));
         for (let i = 0; i < test.length; i++) {
             this.setState({list: [...this.state.list, test[i]]})
         }

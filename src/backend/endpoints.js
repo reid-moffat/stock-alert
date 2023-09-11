@@ -12,3 +12,8 @@ export const signIn = async (email, password) => {
     const result = await signInWithEmailAndPassword(auth, email, password);
     console.log("Sign in result: " + JSON.stringify(result, null, 4));
 }
+
+export const getAlerts = async () => {
+    const getAlerts = httpsCallable(getFunctions(), 'getAlerts');
+    return (await getAlerts()).data;
+}

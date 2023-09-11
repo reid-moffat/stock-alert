@@ -6,7 +6,7 @@ class LoginForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            loggedin: false
+            loggedIn: false
         };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -14,14 +14,17 @@ class LoginForm extends React.Component {
     handleSubmit = (event) => {
         // SUBMIT BUTTON EVENT HANDLER
         signIn(event.target.email.value, event.target.password.value)
+            .then(() => {
+                this.setState({loggedIn: true});
+            })
         if (sessionStorage.getItem("uid") != null) {
-            this.setState({loggedin: true})
+            this.setState({loggedIn: true})
         }
         event.preventDefault();
     }
 
     render() {
-        if (this.state.loggedin === true) {
+        if (this.state.loggedIn === true) {
             return <Navigate to='/stock-alert/home'/>
         }
 
@@ -31,7 +34,7 @@ class LoginForm extends React.Component {
                 <div class="form-title">Log in</div>
                 <form onSubmit={this.handleSubmit}>
                     <label>Email</label><br/>
-                    <input type="text" class="field" name="email" onSubm/>
+                    <input type="text" class="field" name="email"/>
                     <br/>
                     <label>Password</label><br/>
                     <input type="password" class="field" name="password"/>
