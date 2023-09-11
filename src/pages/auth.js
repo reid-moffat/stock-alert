@@ -52,7 +52,7 @@ class LoginSignup extends React.Component {
                         <div class="login-title">Get alerts on your stocks!</div>
                         <img
                             alt="Stock Alert logo" className="stock-img"
-                            src="https://media.discordapp.net/attachments/833233857343782965/937336300728619088/stock_prices.png"
+                            src={process.env.PUBLIC_URL + '/stock_prices.png'}
                         />
 
                     </div>
