@@ -6,6 +6,7 @@ import {createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword} fro
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
+import { getFunctions, httpsCallable } from "firebase/functions";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 import 'firebase/functions';
@@ -27,6 +28,11 @@ const db = getFirestore();
 const auth = getAuth(app);
 
 export const signUp = async (email, password) => {
+    const addMessage = httpsCallable(getFunctions(), 'createAccount');
+    const rsp = await addMessage({ email, password });
+    console.log(`Sign up response: ${rsp}`);
+
+    /*
     createUserWithEmailAndPassword(auth, email, password)
         .then(async (userCredential) => {
             // Signed in
@@ -41,6 +47,7 @@ export const signUp = async (email, password) => {
             console.log(errorCode)
             console.log(errorMessage)
         });
+     */
 }
 
 export const signIn = async (email, password) => {
