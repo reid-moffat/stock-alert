@@ -1,5 +1,5 @@
 import React from 'react';
-import {signIn} from '../backend/firebase.js'
+import {signIn} from '../backend/endpoints.js'
 import {Navigate} from 'react-router';
 
 class LoginForm extends React.Component {

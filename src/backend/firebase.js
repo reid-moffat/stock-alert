@@ -1,7 +1,7 @@
 // TODO remove
 import firebase from 'firebase/compat/app';
 import {addDoc, collection, deleteDoc, doc, getDocs, getFirestore, setDoc, updateDoc} from "firebase/firestore"
-import {createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword} from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 
 // Import the functions you need from the SDKs you need
@@ -27,33 +27,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore();
 const auth = firebase.auth();
 
-export const signUp = async (email, password) => {
-    const addMessage = httpsCallable(getFunctions(), 'createAccount');
-    const rsp = await addMessage({ email, password });
-    console.log(`Sign up response: ${JSON.stringify(rsp, null, 4)}`);
 
-    /*
-    createUserWithEmailAndPassword(auth, email, password)
-        .then(async (userCredential) => {
-            // Signed in
-            const user = userCredential.user;
-            const uid = user.uid;
-            sessionStorage.setItem('uid', uid);
-            await setDoc(doc(db, "users", uid), {email: email});
-        })
-        .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            console.log(errorCode)
-            console.log(errorMessage)
-        });
-     */
-}
-
-export const signIn = async (email, password) => {
-    const result = await signInWithEmailAndPassword(auth, email, password);
-    console.log("Sign in result: " + JSON.stringify(result, null, 4));
-}
 
 export const newAlert = async (stock, current, target, date) => {
     await addDoc(collection(db, `users/${sessionStorage.getItem('uid')}/alerts`), {
@@ -85,3 +59,5 @@ export const updatePrice = async (newPrice, alertid) => {
 }
 
 export default firebase;
+
+export { auth };
