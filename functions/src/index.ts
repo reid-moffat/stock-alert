@@ -10,7 +10,7 @@
 // Start writing functions
 // https://firebase.google.com/docs/functions/typescript
 
-import { getAlerts, addAlert } from './alertManagement';
+import { getAlerts, addAlert, deleteAlert } from './alertManagement';
 import { createAccount} from "./auth";
 
-export { getAlerts, createAccount, addAlert };
+export { getAlerts, createAccount, addAlert, deleteAlert };

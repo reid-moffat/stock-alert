@@ -28,4 +28,14 @@ const addAlert = onCall((request) => {
         .catch((e) => `Failed to add alert: ${JSON.stringify(e)}`);
 });
 
-export { getAlerts, addAlert };
+const deleteAlert = onCall((request) => {
+    const id = request.data.alertId;
+
+    return db.collection('alerts')
+        .doc(id)
+        .delete()
+        .then(() => `Successfully deleted alert with ID ${id}`)
+        .catch((err) => `Error deleting alert with ID '${id}': ${err}`);
+});
+
+export { getAlerts, addAlert, deleteAlert };

@@ -29,35 +29,6 @@ const auth = getAuth(app);
 
 
 
-export const newAlert = async (stock, current, target, date) => {
-    await addDoc(collection(db, `users/${sessionStorage.getItem('uid')}/alerts`), {
-        stock: stock,
-        current: current,
-        target: target,
-        date: date
-    })
-}
-
-export const getAlerts = async (uid) => {
-    const querySnapshot = await getDocs(collection(db, `users/${uid}/alerts`));
-    const list = [];
-    querySnapshot.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshots
-        list.push(doc.data())
-    });
-    return list
-}
-
-export const deleteAlert = async (alertid) => {
-    await deleteDoc(doc(db, `users/${sessionStorage.getItem('uid')}/alerts/${alertid}`))
-}
-
-export const updatePrice = async (newPrice, alertid) => {
-    await updateDoc(doc(db, `users/${sessionStorage.getItem('uid')}/alerts/${alertid}`), {
-        target: newPrice
-    })
-}
-
 export default firebase;
 
 export { auth };
