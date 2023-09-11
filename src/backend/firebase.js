@@ -1,7 +1,7 @@
 // TODO remove
 import firebase from 'firebase/compat/app';
 import {addDoc, collection, deleteDoc, doc, getDocs, getFirestore, setDoc, updateDoc} from "firebase/firestore"
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, getAuth } from "firebase/auth";
 
 
 // Import the functions you need from the SDKs you need
@@ -25,7 +25,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 const db = getFirestore();
-const auth = firebase.auth();
+const auth = getAuth(app);
 
 
 
