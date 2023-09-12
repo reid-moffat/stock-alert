@@ -45,11 +45,15 @@ const checkAlerts = onSchedule({
                 if (stockPrice > alert.target) {
                     await sendEmail(alert.userId, `Stock alert for ${alert.ticker}!`,
                         `Stock alert triggered!<br>Ticker: ${alert.ticker}<br>Current price: ${stockPrice}<br>Alert value: ${alert.target}`);
+
+                    await db.collection("alerts").doc(alert.id).update({ active: false });
                 }
             } else if (alert.increase === false) {
                 if (stockPrice < alert.target) {
                     await sendEmail(alert.userId, `Stock alert for ${alert.ticker}!`,
                         `Stock alert triggered!<br>Ticker: ${alert.ticker}<br>Current price: ${stockPrice}<br>Alert value: ${alert.target}`);
+
+                    await db.collection("alerts").doc(alert.id).update({ active: false });
                 }
             } else {
                 errorOccurred = true;
