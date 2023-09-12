@@ -23,6 +23,29 @@ class ActiveAlerts extends React.Component {
         this.setState({activealerts: false})
     }
 
+    // Convert unix time (from firebase) to readable date
+    getDate = (timestamp) => {
+        const date = new Date(timestamp * 1000);
+
+        const months = ["January","February","March","April","May","June","July",
+            "August","September","October","November","December"];
+
+        const dayOrdinal = (day) => {
+            if (day > 3 && day < 21) {
+                return day + 'th';
+            }
+
+            switch (day % 10) {
+                case 1:  return day + "st";
+                case 2:  return day + "nd";
+                case 3:  return day + "rd";
+                default: return day + "th";
+            }
+        };
+
+        return months[date.getMonth()] + ' ' + dayOrdinal(date.getDate()) + ', ' + date.getFullYear();
+    }
+
     render() {
         return (
             <div className="alert">
@@ -38,7 +61,7 @@ class ActiveAlerts extends React.Component {
                                 <span class="target">Target Price: {item.target}</span>
                             </div>
                             <div class="stock-row">
-                                <span class="date">📅 {item.date}</span>
+                                <span class="date">📅 {this.getDate(item.time)}</span>
                                 {/*<span class="current">Current Price: {item.current}<br/></span>*/}
                             </div>
                         </div>
@@ -57,7 +80,7 @@ class ActiveAlerts extends React.Component {
                                 <span className="target">Target Price: {item.target}</span>
                             </div>
                             <div className="stock-row">
-                                <span className="date">📅 {item.date}</span>
+                                <span className="date">📅 {this.getDate(item.time)}</span>
                                 {/*<span class="current">Current Price: {item.current}<br/></span>*/}
                             </div>
                         </div>
