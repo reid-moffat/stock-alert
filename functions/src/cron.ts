@@ -1,5 +1,5 @@
 import {onSchedule} from "firebase-functions/v2/scheduler";
-import {db, verifySecret} from "./helpers";
+import {db, sendEmail, verifySecret} from "./helpers";
 import axios from 'axios';
 import {logger} from "firebase-functions";
 
@@ -39,15 +39,17 @@ const checkAlerts = onSchedule({
                 }
             };
 
-            const stockPrice = await axios.request(options);
+            const stockPrice = await axios.request(options).then(rsp => rsp.data.price);
 
             if (alert.increase === true) {
                 if (stockPrice > alert.target) {
-                    // Send email
+                    await sendEmail(alert.userId, `Stock alert for ${alert.ticker}!`,
+                        `Stock alert triggered!<br>Ticker: ${alert.ticker}<br>Current price: ${stockPrice}<br>Alert value: ${alert.target}`);
                 }
             } else if (alert.increase === false) {
                 if (stockPrice < alert.target) {
-                    // Send email
+                    await sendEmail(alert.userId, `Stock alert for ${alert.ticker}!`,
+                        `Stock alert triggered!<br>Ticker: ${alert.ticker}<br>Current price: ${stockPrice}<br>Alert value: ${alert.target}`);
                 }
             } else {
                 errorOccurred = true;
@@ -66,4 +68,4 @@ const checkAlerts = onSchedule({
     logger.info("Cron job checkAlerts successfully completed");
 });
 
-export {checkAlerts};
+export { checkAlerts };

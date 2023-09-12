@@ -21,4 +21,19 @@ const verifySecret = (secret: any, name: any) => {
     }
 };
 
-export { db, auth, verifySecret };
+// Sends
+const sendEmail = async (recipient: string, subject: string, htmlBody: string) => {
+    const email = {
+        to: (await auth.getUser(recipient)).email,
+        message: {
+            subject: subject,
+            html: htmlBody,
+        },
+    };
+
+    await db
+        .collection('emails')
+        .add(email);
+};
+
+export { db, auth, verifySecret, sendEmail };
