@@ -12,5 +12,6 @@
 
 import { getAlerts, addAlert, deleteAlert } from './alertManagement';
 import { createAccount} from "./auth";
+import { checkAlerts} from "./cron";
 
-export { getAlerts, createAccount, addAlert, deleteAlert };
+export { getAlerts, createAccount, addAlert, deleteAlert, checkAlerts };

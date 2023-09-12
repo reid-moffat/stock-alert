@@ -18,6 +18,7 @@ const addAlert = onCall((request) => {
         increase: true,
         target: request.data.target,
         time: admin.firestore.Timestamp.now(),
+        active: true,
         // @ts-ignore
         userId: request.auth.uid,
     };
