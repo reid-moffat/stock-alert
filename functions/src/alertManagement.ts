@@ -12,18 +12,18 @@ const getAlerts = onCall((request) => {
                 return [];
             }
 
-            return query.docs.map(doc => ({ ...doc.data(), time: doc.data().time._seconds }));
+            return query.docs.map(doc => ({...doc.data(), time: doc.data().time._seconds}));
         })
         .catch((err) => `Error getting alerts: ${err}`);
 });
 
-const getStockPrice = onCall({ secrets: ["STOCK_API_URL", "STOCK_API_KEY", "STOCK_API_HOST"] },
+const getStockPrice = onCall({secrets: ["STOCK_API_URL", "STOCK_API_KEY", "STOCK_API_HOST"]},
     (request) => {
 
-    verifySecrets();
+        verifySecrets();
 
-    return stockPriceHelper(request.data.ticker);
-});
+        return stockPriceHelper(request.data.ticker);
+    });
 
 const addAlert = onCall((request) => {
     const newAlert = {
@@ -52,4 +52,4 @@ const deleteAlert = onCall((request) => {
         .catch((err) => `Error deleting alert with ID '${id}': ${err}`);
 });
 
-export { getAlerts, addAlert, deleteAlert, getStockPrice };
+export {getAlerts, addAlert, deleteAlert, getStockPrice};

@@ -24,4 +24,4 @@ const createAccount = onCall((request) => {
     }
 );
 
-export { createAccount };
+export {createAccount};

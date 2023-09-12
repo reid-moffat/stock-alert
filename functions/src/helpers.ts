@@ -39,7 +39,7 @@ const verifySecrets = () => {
     }
 
     // Setup API req data
-    stockApiReq.method= 'GET';
+    stockApiReq.method = 'GET';
     stockApiReq.url = process.env.STOCK_API_URL + '';
     stockApiReq.headers = {
         'X-RapidAPI-Key': process.env.STOCK_API_KEY + '',
@@ -74,4 +74,4 @@ const sendEmail = async (recipient: string, subject: string, htmlBody: string) =
         .add(email);
 };
 
-export { db, auth, verifySecrets, sendEmail, stockPriceHelper };
+export {db, auth, verifySecrets, sendEmail, stockPriceHelper};

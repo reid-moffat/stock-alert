@@ -27,8 +27,8 @@ class ActiveAlerts extends React.Component {
     getDate = (timestamp) => {
         const date = new Date(timestamp * 1000);
 
-        const months = ["January","February","March","April","May","June","July",
-            "August","September","October","November","December"];
+        const months = ["January", "February", "March", "April", "May", "June", "July",
+            "August", "September", "October", "November", "December"];
 
         const dayOrdinal = (day) => {
             if (day > 3 && day < 21) {
@@ -36,10 +36,14 @@ class ActiveAlerts extends React.Component {
             }
 
             switch (day % 10) {
-                case 1:  return day + "st";
-                case 2:  return day + "nd";
-                case 3:  return day + "rd";
-                default: return day + "th";
+                case 1:
+                    return day + "st";
+                case 2:
+                    return day + "nd";
+                case 3:
+                    return day + "rd";
+                default:
+                    return day + "th";
             }
         };
 

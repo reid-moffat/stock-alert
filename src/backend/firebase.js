@@ -1,12 +1,11 @@
 // TODO remove
 import firebase from 'firebase/compat/app';
-import {addDoc, collection, deleteDoc, doc, getDocs, getFirestore, setDoc, updateDoc} from "firebase/firestore"
-import { signInWithEmailAndPassword, getAuth } from "firebase/auth";
+import {getFirestore} from "firebase/firestore"
+import {getAuth} from "firebase/auth";
 
 
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getFunctions, httpsCallable } from "firebase/functions";
+import {initializeApp} from "firebase/app";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 import 'firebase/functions';
@@ -28,7 +27,6 @@ const db = getFirestore();
 const auth = getAuth(app);
 
 
-
 export default firebase;
 
-export { auth };
+export {auth};

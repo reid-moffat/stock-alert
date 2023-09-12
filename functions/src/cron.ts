@@ -1,5 +1,5 @@
 import {onSchedule} from "firebase-functions/v2/scheduler";
-import {db, stockPriceHelper, sendEmail, verifySecrets} from "./helpers";
+import {db, sendEmail, stockPriceHelper, verifySecrets} from "./helpers";
 import {logger} from "firebase-functions";
 
 const checkAlerts = onSchedule({
@@ -33,14 +33,14 @@ const checkAlerts = onSchedule({
                 if (stockPrice > alert.target) {
                     await sendEmail(alert.userId, `Stock alert for ${alert.ticker}!`,
                         `Stock alert triggered!<br>Ticker: ${alert.ticker}<br>Current price: ${stockPrice}<br>Alert value: ${alert.target}`);
-                    await db.collection("alerts").doc(alert.id).update({ active: false });
+                    await db.collection("alerts").doc(alert.id).update({active: false});
                     alertsSent++;
                 }
             } else if (alert.increase === false) {
                 if (stockPrice < alert.target) {
                     await sendEmail(alert.userId, `Stock alert for ${alert.ticker}!`,
                         `Stock alert triggered!<br>Ticker: ${alert.ticker}<br>Current price: ${stockPrice}<br>Alert value: ${alert.target}`);
-                    await db.collection("alerts").doc(alert.id).update({ active: false });
+                    await db.collection("alerts").doc(alert.id).update({active: false});
                     alertsSent++;
                 }
             } else {
@@ -60,4 +60,4 @@ const checkAlerts = onSchedule({
     logger.info(`Cron job checkAlerts successfully completed. ${activeAlerts.length} alerts checked, ${alertsSent} alerts sent`);
 });
 
-export { checkAlerts };
+export {checkAlerts};

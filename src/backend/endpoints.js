@@ -4,7 +4,7 @@ import {auth} from "./firebase";
 
 export const signUp = async (email, password) => {
     const addMessage = httpsCallable(getFunctions(), 'createAccount');
-    const rsp = await addMessage({ email, password });
+    const rsp = await addMessage({email, password});
     console.log(`Sign up response: ${JSON.stringify(rsp, null, 4)}`);
 }
 
