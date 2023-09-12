@@ -10,6 +10,7 @@ const checkAlerts = onSchedule({
     verifySecrets();
 
     let errorOccurred = false;
+    let alertsSent = 0;
 
     const activeAlerts = await db.collection('alerts')
         .where('active', '==', true)
@@ -32,15 +33,15 @@ const checkAlerts = onSchedule({
                 if (stockPrice > alert.target) {
                     await sendEmail(alert.userId, `Stock alert for ${alert.ticker}!`,
                         `Stock alert triggered!<br>Ticker: ${alert.ticker}<br>Current price: ${stockPrice}<br>Alert value: ${alert.target}`);
-
                     await db.collection("alerts").doc(alert.id).update({ active: false });
+                    alertsSent++;
                 }
             } else if (alert.increase === false) {
                 if (stockPrice < alert.target) {
                     await sendEmail(alert.userId, `Stock alert for ${alert.ticker}!`,
                         `Stock alert triggered!<br>Ticker: ${alert.ticker}<br>Current price: ${stockPrice}<br>Alert value: ${alert.target}`);
-
                     await db.collection("alerts").doc(alert.id).update({ active: false });
+                    alertsSent++;
                 }
             } else {
                 errorOccurred = true;
@@ -56,7 +57,7 @@ const checkAlerts = onSchedule({
         throw new Error("See logs above");
     }
 
-    logger.info("Cron job checkAlerts successfully completed");
+    logger.info(`Cron job checkAlerts successfully completed. ${activeAlerts.length} alerts checked, ${alertsSent} alerts sent`);
 });
 
 export { checkAlerts };
