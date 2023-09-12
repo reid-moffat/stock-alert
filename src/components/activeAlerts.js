@@ -25,53 +25,45 @@ class ActiveAlerts extends React.Component {
 
     render() {
         return (
-            <>
-                <div class="alert">
-                    <div class="stock-row">
-                        <h2>My Alerts 🚨</h2>
-
-                    </div>
-
-                    <div class="alerts-container">
-                        {this.state.list.map((item, index) => (
-                            <div class="stock">
-                                <div class="stock-row">
-                                    <span class="stock-name">{item.ticker}</span>
-                                    <span class="target">Target Price: {item.target}</span>
-                                </div>
-                                <div class="stock-row">
-                                    <span class="date">📅 {item.date}</span>
-                                    {/*<span class="current">Current Price: {item.current}<br/></span>*/}
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                    {/*
-                    <div class="alerts-container">
-                        <div class="stock">
-                            <div class="stock-row">
-                                <span class="stock-name">AAPC</span>
-                                <span class="target">test Target Price: 344</span>
-                            </div>
-                            <div class="stock-row">
-                                <span class="date">📅 January 30, 2022</span>
-                                <span class="current">test Current Price: 312</span>
-                            </div>
-                        </div>
-                        <div class="stock">
-                            <div class="stock-row">
-                                <span class="stock-name">AAPC</span>
-                                <span class="target">test Target Price: 344</span>
-                            </div>
-                            <div class="stock-row">
-                                <span class="date">📅 January 30, 2022</span>
-                                <span class="current">test Current Price: 312</span>
-                            </div>
-                        </div>
-                    /div> 
-                    */}
+            <div className="alert">
+                <div class="stock-row">
+                    <h2>Active Alerts 🚨</h2>
                 </div>
-            </>
+
+                <div class="alerts-container">
+                    {this.state.list.map((item, index) => (item.active &&
+                        <div class="stock">
+                            <div class="stock-row">
+                                <span class="stock-name">{item.ticker}</span>
+                                <span class="target">Target Price: {item.target}</span>
+                            </div>
+                            <div class="stock-row">
+                                <span class="date">📅 {item.date}</span>
+                                {/*<span class="current">Current Price: {item.current}<br/></span>*/}
+                            </div>
+                        </div>
+                    ))}
+                </div>
+
+                <div className="stock-row">
+                    <h2>Completed Alerts</h2>
+                </div>
+
+                <div className="alerts-container">
+                    {this.state.list.map((item, index) => (!item.active &&
+                        <div className="stock">
+                            <div className="stock-row">
+                                <span className="stock-name">{item.ticker}</span>
+                                <span className="target">Target Price: {item.target}</span>
+                            </div>
+                            <div className="stock-row">
+                                <span className="date">📅 {item.date}</span>
+                                {/*<span class="current">Current Price: {item.current}<br/></span>*/}
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
         );
     }
 }
