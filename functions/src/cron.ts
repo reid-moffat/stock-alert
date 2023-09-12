@@ -1,6 +1,5 @@
 import {onSchedule} from "firebase-functions/v2/scheduler";
-import {db, sendEmail, verifySecret} from "./helpers";
-import axios from 'axios';
+import {db, stockPriceHelper, sendEmail, verifySecrets} from "./helpers";
 import {logger} from "firebase-functions";
 
 const checkAlerts = onSchedule({
@@ -8,10 +7,7 @@ const checkAlerts = onSchedule({
     secrets: ["STOCK_API_URL", "STOCK_API_KEY", "STOCK_API_HOST"]
 }, async (event) => {
 
-    // Make sure secrets are valid
-    verifySecret(process.env.STOCK_API_URL, "STOCK_API_URL");
-    verifySecret(process.env.STOCK_API_KEY, "STOCK_API_KEY");
-    verifySecret(process.env.STOCK_API_HOST, "STOCK_API_HOST");
+    verifySecrets();
 
     let errorOccurred = false;
 
@@ -30,16 +26,7 @@ const checkAlerts = onSchedule({
 
     for (const alert of activeAlerts) {
         try {
-            const options = {
-                method: 'GET',
-                url: process.env.STOCK_API_URL + alert.ticker,
-                headers: {
-                    'X-RapidAPI-Key': process.env.STOCK_API_KEY,
-                    'X-RapidAPI-Host': process.env.STOCK_API_HOST
-                }
-            };
-
-            const stockPrice = await axios.request(options).then(rsp => rsp.data.price);
+            const stockPrice = await stockPriceHelper(alert.ticker);
 
             if (alert.increase === true) {
                 if (stockPrice > alert.target) {
