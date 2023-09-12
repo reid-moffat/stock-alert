@@ -1,4 +1,4 @@
-import { onCall } from "firebase-functions/v2/https";
+import {onCall} from "firebase-functions/v2/https";
 import {db, stockPriceHelper, verifySecrets} from "./helpers";
 import * as admin from 'firebase-admin';
 
@@ -7,7 +7,13 @@ const getAlerts = onCall((request) => {
         // @ts-ignore
         .where('userId', '==', request.auth.uid)
         .get()
-        .then((query) => query.empty? [] : query.docs.map(doc => doc.data()))
+        .then((query) => {
+            if (query.empty) {
+                return [];
+            }
+
+            return query.docs.map(doc => ({ ...doc.data(), time: doc.data().time._seconds }));
+        })
         .catch((err) => `Error getting alerts: ${err}`);
 });
 
