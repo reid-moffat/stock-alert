@@ -1,6 +1,5 @@
-//import * as logger from "firebase-functions/lib/logger";
 import { onCall } from "firebase-functions/v2/https";
-import {db} from "./helpers";
+import {db, stockPriceHelper, verifySecrets} from "./helpers";
 import * as admin from 'firebase-admin';
 
 const getAlerts = onCall((request) => {
@@ -10,6 +9,14 @@ const getAlerts = onCall((request) => {
         .get()
         .then((query) => query.empty? [] : query.docs.map(doc => doc.data()))
         .catch((err) => `Error getting alerts: ${err}`);
+});
+
+const getStockPrice = onCall({ secrets: ["STOCK_API_URL", "STOCK_API_KEY", "STOCK_API_HOST"] },
+    (request) => {
+
+    verifySecrets();
+
+    return stockPriceHelper(request.data.ticker);
 });
 
 const addAlert = onCall((request) => {
@@ -39,4 +46,4 @@ const deleteAlert = onCall((request) => {
         .catch((err) => `Error deleting alert with ID '${id}': ${err}`);
 });
 
-export { getAlerts, addAlert, deleteAlert };
+export { getAlerts, addAlert, deleteAlert, getStockPrice };
