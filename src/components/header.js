@@ -9,7 +9,7 @@ class Header extends React.Component {
             <div className="header">
                 <img
                     alt="Stock Alert logo" className="logo"
-                    src="https://media.discordapp.net/attachments/833233857343782965/937200024000028682/stockalert.png"
+                    src={process.env.PUBLIC_URL + '/logo.png'}
                 />
             </div>
         )

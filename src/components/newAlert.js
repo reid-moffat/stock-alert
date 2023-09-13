@@ -1,5 +1,5 @@
 import React from 'react';
-import {newAlert} from '../backend/firebase.js';
+import {addAlert} from '../backend/endpoints.js';
 import "../styles/home.css";
 import {default as axios} from "axios";
 
@@ -55,8 +55,8 @@ class NewAlert extends React.Component {
         const yyyy = today.getFullYear();
 
         today = mm + '/' + dd + '/' + yyyy;
-        await newAlert(this.state.stock, price, this.state.target, today)
-
+        const result = await addAlert({ticker: this.state.stock, target: this.state.target});
+        console.log("Add alert result: " + JSON.stringify(result, null, 4));
     }
 
     stockChange(event) {

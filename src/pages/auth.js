@@ -24,6 +24,25 @@ class LoginSignup extends React.Component {
         this.setState({signup: true});
     }
 
+    // Renders login/sign up form based on state
+    renderAuthForm = () => {
+        if (this.state.signup) {
+            return (
+                <>
+                    <SignupForm/>
+                    Already have an account? <button class="login-line-button" onClick={this.toLogin}>Login</button>
+                </>
+            );
+        }
+
+        return (
+            <>
+                <LoginForm/>
+                Don't have an account? <button class="login-line-button" onClick={this.toSignup}>Sign up</button>
+            </>
+        );
+    }
+
     render() {
         return (
             <>
@@ -33,24 +52,11 @@ class LoginSignup extends React.Component {
                         <div class="login-title">Get alerts on your stocks!</div>
                         <img
                             alt="Stock Alert logo" className="stock-img"
-                            src="https://media.discordapp.net/attachments/833233857343782965/937336300728619088/stock_prices.png"
+                            src={process.env.PUBLIC_URL + '/stock_prices.png'}
                         />
 
                     </div>
-                    <div class="login-right">
-                        {this.state.signup ?
-                            <>
-                                <SignupForm/>
-                                Already have an account? <button class="login-line-button"
-                                                                 onClick={this.toLogin}>Login</button>
-                            </> :
-                            <>
-                                <LoginForm/>
-                                Don't have an account? <button class="login-line-button" onClick={this.toSignup}>Sign
-                                up</button>
-                            </>
-                        }
-                    </div>
+                    <div class="login-right">{this.renderAuthForm()}</div>
                 </div>
             </>
         );
