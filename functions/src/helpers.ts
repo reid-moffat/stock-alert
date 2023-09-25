@@ -1,10 +1,21 @@
 import * as admin from 'firebase-admin';
 import { HttpsError } from "firebase-functions/v2/https";
 import axios from "axios";
+import { CallableContext } from "firebase-functions/lib/common/providers/https";
 
 admin.initializeApp();
 const db = admin.firestore();
 const auth = admin.auth();
+
+// Check if the requesting user is authenticated
+const verifyIsAuthenticated = (context: CallableContext, name: string) => {
+    if (!context.auth) {
+        throw new HttpsError(
+            'unauthenticated',
+            `You must be logged in to call the API endpoint ${name}`
+        );
+    }
+};
 
 // Gets the price of a stock
 const stockPriceHelper = (ticker: string): Promise<String> => {
@@ -61,4 +72,4 @@ const sendEmail = async (recipient: string, subject: string, htmlBody: string) =
 // Adds an s character if the given quantity is plural
 const plural = (number: number, noun: string) => number === 1 ? number + noun : number + noun + 's';
 
-export { db, auth, sendEmail, stockPriceHelper, plural };
+export { db, auth, verifyIsAuthenticated, sendEmail, stockPriceHelper, plural };
