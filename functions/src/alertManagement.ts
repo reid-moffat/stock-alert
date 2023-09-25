@@ -76,6 +76,4 @@ const deleteAlert = onCall(async (request) => {
         .catch((err) => `Error deleting alert with ID '${id}': ${err}`);
 });
 
-// make an update alert function
-
 export { getAlerts, addAlert, deleteAlert, getStockPrice };
