@@ -36,11 +36,14 @@ const getStockPrice = onCall({secrets: ["STOCK_API_URL", "STOCK_API_KEY", "STOCK
         return stockPriceHelper(request.data.ticker);
     });
 
-const addAlert = onCall(async (request) => {
+const addAlert = onCall({ secrets: ["STOCK_API_URL", "STOCK_API_KEY", "STOCK_API_HOST"] },
+    async (request) => {
 
     logger.info(`Starting function addAlert...`);
 
     verifyIsAuthenticated(request);
+
+    await stockPriceHelper(request.data.ticker);
 
     const newAlert = {
         ticker: request.data.ticker,
