@@ -1,6 +1,6 @@
 import { HttpsError, onCall } from "firebase-functions/v2/https";
 import { auth } from "./helpers";
-import * as logger from "firebase-functions/logger";
+import { logger }  from "firebase-functions";
 
 const createAccount = onCall((request) => {
         // Create user (will throw an error if the email is already in use)
