@@ -75,7 +75,7 @@ class NewAlert extends React.Component {
                 <div class="new-alert">
                     <h1>New Alert</h1>
                     <label>Stock Name</label>
-                    <input type="text" name="stock" class="field" onChange={this.stockChange}/>
+                    <input type="text" name="stock" class="field" style={{ 'text-transform': 'uppercase' }} onChange={this.stockChange}/>
                     <label> Alert Price </label>
                     <input type="number" name="target" class="field" onChange={this.targetChange}/>
                     <input type="submit" class="add-btn btn" value="Add Alert" onClick={this.handleSubmit}/>
