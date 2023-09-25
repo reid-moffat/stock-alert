@@ -1,9 +1,12 @@
 import { onCall } from "firebase-functions/v2/https";
-import { auth, db, stockPriceHelper } from "./helpers";
+import { auth, db, stockPriceHelper, verifyIsAuthenticated } from "./helpers";
 import * as admin from 'firebase-admin';
 import { logger }  from "firebase-functions";
 
 const getAlerts = onCall((request) => {
+
+    verifyIsAuthenticated(request, 'getAlerts');
+
     return db.collection('alerts')
         // @ts-ignore
         .where('userId', '==', request.auth.uid)
@@ -20,12 +23,17 @@ const getAlerts = onCall((request) => {
 
 const getStockPrice = onCall({secrets: ["STOCK_API_URL", "STOCK_API_KEY", "STOCK_API_HOST"]},
     (request) => {
+
+        verifyIsAuthenticated(request, 'getStockPrice');
+
         return stockPriceHelper(request.data.ticker);
     });
 
 const addAlert = onCall(async (request) => {
 
     logger.info(`Starting function addAlert...`);
+
+    verifyIsAuthenticated(request, 'addAlert');
 
     const newAlert = {
         ticker: request.data.ticker,
@@ -48,6 +56,9 @@ const addAlert = onCall(async (request) => {
 });
 
 const deleteAlert = onCall((request) => {
+
+    verifyIsAuthenticated(request, 'deleteAlert');
+
     const id = request.data.alertId;
 
     return db.collection('alerts')

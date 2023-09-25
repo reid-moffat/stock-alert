@@ -3,13 +3,14 @@ import { HttpsError } from "firebase-functions/v2/https";
 import axios from "axios";
 import { CallableContext } from "firebase-functions/lib/common/providers/https";
 
+// Initialize the app and required SDKs
 admin.initializeApp();
 const db = admin.firestore();
 const auth = admin.auth();
 
 // Check if the requesting user is authenticated
-const verifyIsAuthenticated = (context: CallableContext, name: string) => {
-    if (!context.auth) {
+const verifyIsAuthenticated = (request: CallableContext, name: string) => {
+    if (!request.auth || !request.auth.uid) {
         throw new HttpsError(
             'unauthenticated',
             `You must be logged in to call the API endpoint ${name}`
