@@ -60,7 +60,10 @@ class NewAlert extends React.Component {
     }
 
     stockChange(event) {
-        console.log(event.target.value);
+        if (!event.key.match(/[a-z]/i)) {
+            event.preventDefault(); // Skip non-letters
+        }
+
         this.setState({stock: event.target.value.toUpperCase()});
     }
 
@@ -74,7 +77,7 @@ class NewAlert extends React.Component {
                 <div class="new-alert">
                     <h1>New Alert</h1>
                     <label>Stock Name</label>
-                    <input type="text" name="stock" class="field" style={{ 'text-transform': 'uppercase' }} onChange={this.stockChange}/>
+                    <input type="text" name="stock" class="field" style={{ 'text-transform': 'uppercase' }} onKeyPress={(e) => this.stockChange(e)}/>
                     <label> Alert Price </label>
                     <input type="number" name="target" class="field" onChange={this.targetChange}/>
                     <input type="submit" class="add-btn btn" value="Add Alert" onClick={this.handleSubmit}/>
