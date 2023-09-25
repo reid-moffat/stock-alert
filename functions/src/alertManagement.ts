@@ -14,7 +14,7 @@ const getAlerts = onCall((request) => {
 
     verifyIsAuthenticated(request);
 
-    return getCollection('alerts')
+    return getCollection('/alerts/')
         // @ts-ignore
         .where('userId', '==', request.auth.uid)
         .get()
@@ -56,7 +56,7 @@ const addAlert = onCall(async (request) => {
 
     logger.info(`Adding alert object to database: ${JSON.stringify(newAlert)}`);
 
-    return getCollection('alerts')
+    return getCollection('/alerts/')
         .add(newAlert)
         .then((docRef) => (docRef.id))
         .catch((e) => `Failed to add alert: ${JSON.stringify(e)}`);
@@ -64,11 +64,11 @@ const addAlert = onCall(async (request) => {
 
 const deleteAlert = onCall((request) => {
 
-    verifyDocPermission(request, request.data.alertId);
+    verifyDocPermission(request, `/alerts/${request.data.alertId}/`);
 
     const id = request.data.alertId;
 
-    return getDoc(`alerts/${id}`)
+    return getDoc(`/alerts/${id}/`)
         .delete()
         .then(() => `Successfully deleted alert with ID ${id}`)
         .catch((err) => `Error deleting alert with ID '${id}': ${err}`);

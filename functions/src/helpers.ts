@@ -105,7 +105,7 @@ const sendEmail = async (emailAddress: string, subject: string, htmlBody: string
         },
     };
 
-    await getCollection('emails')
+    await getCollection('/emails/')
         .add(email);
 };
 

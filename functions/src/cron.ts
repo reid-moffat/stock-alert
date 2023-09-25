@@ -12,7 +12,7 @@ const checkAlerts = onSchedule({
     let errorOccurred = false;
     let alertsSent = 0;
 
-    const activeAlerts = await getCollection('alerts')
+    const activeAlerts = await getCollection('/alerts/')
         .where('active', '==', true)
         .get()
         .then(alert => {
@@ -42,7 +42,7 @@ const checkAlerts = onSchedule({
                 await sendEmail(alert.email, `Stock alert for ${alert.ticker}!`, emailHtml);
 
                 logger.info('Email sent to ...! Deactivating alert...');
-                await getDoc(`alerts/${alert.id}`).update({ active: false });
+                await getDoc(`/alerts/${alert.id}/`).update({ active: false });
                 alertsSent++;
                 logger.info(`Processing for alert ${alert.id} completed successfully`);
             }
