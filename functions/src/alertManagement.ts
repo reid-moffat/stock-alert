@@ -40,11 +40,12 @@ const addAlert = onCall({ secrets: ["STOCK_API_URL", "STOCK_API_KEY", "STOCK_API
     async (request) => {
 
     logger.info(`Starting function addAlert...`);
-
     verifyIsAuthenticated(request);
 
+    logger.info(`Verify stock ticker exists...`);
     await stockPriceHelper(request.data.ticker);
 
+    logger.info(`Setting up alert object...`);
     const newAlert = {
         ticker: request.data.ticker,
         increase: true,
@@ -58,18 +59,16 @@ const addAlert = onCall({ secrets: ["STOCK_API_URL", "STOCK_API_KEY", "STOCK_API
     };
 
     logger.info(`Adding alert object to database: ${JSON.stringify(newAlert)}`);
-
     return getCollection('/alerts/')
         .add(newAlert)
         .then((docRef) => (docRef.id))
         .catch((e) => `Failed to add alert: ${JSON.stringify(e)}`);
 });
 
-const deleteAlert = onCall((request) => {
-
-    verifyDocPermission(request, `/alerts/${request.data.alertId}/`);
+const deleteAlert = onCall(async (request) => {
 
     const id = request.data.alertId;
+    await verifyDocPermission(request, `/alerts/${id}/`);
 
     return getDoc(`/alerts/${id}/`)
         .delete()
