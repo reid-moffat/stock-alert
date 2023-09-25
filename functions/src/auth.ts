@@ -1,5 +1,6 @@
 import {HttpsError, onCall} from "firebase-functions/v2/https";
 import {auth} from "./helpers";
+import * as logger from "firebase-functions/logger";
 
 const createAccount = onCall((request) => {
         // Create user (will throw an error if the email is already in use)
@@ -15,10 +16,11 @@ const createAccount = onCall((request) => {
             })
             .catch((error) => {
                 if (error.code === 'auth/email-already-exists') {
+                    logger.log(`User trying to create an account with an existing email: ${request.data.email}`);
                     throw new HttpsError('already-exists', `Email ${request.data.email} in use`);
                 }
 
-                //functions.logger.log(`Error creating new user (not including email in use): ${JSON.stringify(error)}`);
+                logger.log(`Error creating new user (not including email in use): ${error.message}`);
                 throw new HttpsError('internal', `Error creating account - please try again later`);
             });
     }
