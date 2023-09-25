@@ -32,12 +32,17 @@ class NewAlert extends React.Component {
         console.log("Add alert result: " + JSON.stringify(result, null, 4));
     }
 
-    stockChange(event) {
+    // Skips all non-letters for stock input
+    stockTickerInput(event) {
         if (!event.key.match(/[a-z]/i)) {
-            event.preventDefault(); // Skip non-letters
+            event.preventDefault();
         }
+    }
 
-        this.setState({stock: event.target.value.toUpperCase()});
+    // Updates stock ticker value (ignores non-letters)
+    stockChange(event) {
+        const value = event.target.value;
+        this.setState({stock: value.replace(/[^a-z]/gi, '').toUpperCase()});
     }
 
     targetChange(event) {
@@ -50,7 +55,8 @@ class NewAlert extends React.Component {
                 <div class="new-alert">
                     <h1>New Alert</h1>
                     <label>Stock Name</label>
-                    <input type="text" name="stock" class="field" style={{ 'text-transform': 'uppercase' }} onKeyPress={(e) => this.stockChange(e)}/>
+                    <input type="text" name="stock" class="field" style={{ 'text-transform': 'uppercase' }}
+                           onKeyDown={(e) => this.stockTickerInput(e)} onChange={(e) => this.stockChange(e)}/>
                     <label> Alert Price </label>
                     <input type="number" name="target" class="field" onChange={this.targetChange}/>
                     {this.state.errorMessage && <h3 style={{ color: 'red' }}>{this.state.errorMessage}</h3>}
