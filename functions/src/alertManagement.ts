@@ -1,6 +1,7 @@
 import { onCall } from "firebase-functions/v2/https";
 import { auth, db, stockPriceHelper } from "./helpers";
 import * as admin from 'firebase-admin';
+import { logger }  from "firebase-functions";
 
 const getAlerts = onCall((request) => {
     return db.collection('alerts')
@@ -23,6 +24,9 @@ const getStockPrice = onCall({secrets: ["STOCK_API_URL", "STOCK_API_KEY", "STOCK
     });
 
 const addAlert = onCall(async (request) => {
+
+    logger.info(`Starting function addAlert...`);
+
     const newAlert = {
         ticker: request.data.ticker,
         increase: true,
@@ -32,8 +36,10 @@ const addAlert = onCall(async (request) => {
         // @ts-ignore
         userId: request.auth.uid,
         // @ts-ignore
-        email: await auth.getUser(request.auth.uid)
+        email: (await auth.getUser(request.auth.uid)).email
     };
+
+    logger.info(`Adding alert object to database: ${JSON.stringify(newAlert)}`);
 
     return db.collection('alerts')
         .add(newAlert)
