@@ -1,5 +1,12 @@
 import { onCall } from "firebase-functions/v2/https";
-import { auth, db, stockPriceHelper, verifyDocPermission, verifyIsAuthenticated } from "./helpers";
+import {
+    auth,
+    getCollection,
+    getDoc,
+    stockPriceHelper,
+    verifyDocPermission,
+    verifyIsAuthenticated
+} from "./helpers";
 import * as admin from 'firebase-admin';
 import { logger }  from "firebase-functions";
 
@@ -7,7 +14,7 @@ const getAlerts = onCall((request) => {
 
     verifyIsAuthenticated(request);
 
-    return db.collection('alerts')
+    return getCollection('alerts')
         // @ts-ignore
         .where('userId', '==', request.auth.uid)
         .get()
@@ -49,7 +56,7 @@ const addAlert = onCall(async (request) => {
 
     logger.info(`Adding alert object to database: ${JSON.stringify(newAlert)}`);
 
-    return db.collection('alerts')
+    return getCollection('alerts')
         .add(newAlert)
         .then((docRef) => (docRef.id))
         .catch((e) => `Failed to add alert: ${JSON.stringify(e)}`);
@@ -61,8 +68,7 @@ const deleteAlert = onCall((request) => {
 
     const id = request.data.alertId;
 
-    return db.collection('alerts')
-        .doc(id)
+    return getDoc(`alerts/${id}`)
         .delete()
         .then(() => `Successfully deleted alert with ID ${id}`)
         .catch((err) => `Error deleting alert with ID '${id}': ${err}`);

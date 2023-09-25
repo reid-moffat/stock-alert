@@ -9,8 +9,20 @@ const db = admin.firestore();
 const auth = admin.auth();
 
 // Helpers for getting a doc/collection
-const getCollection = (path: string) => db.collection(path);
-const getDoc = (path: string) => db.doc(path);
+const getCollection = (path: string) => {
+    if (!/^\/[a-zA-Z0-9]+\/(([a-zA-Z0-9]+\/){2})*$/.test(path)) {
+        throw new HttpsError('internal', `Invalid collection path (${path}), see regex`);
+    }
+
+    return db.collection(path);
+}
+const getDoc = (path: string) => {
+    if (!/^\/[a-zA-Z0-9]+\/{2}(([a-zA-Z0-9]+\/){2})*$/.test(path)) {
+        throw new HttpsError('internal', `Invalid document path (${path}), see regex`);
+    }
+
+    return db.doc(path);
+}
 
 // Check if the requesting user is authenticated
 const verifyIsAuthenticated = (request: CallableContext) => {
@@ -93,12 +105,11 @@ const sendEmail = async (recipient: string, subject: string, htmlBody: string) =
         },
     };
 
-    await db
-        .collection('emails')
+    await getCollection('emails')
         .add(email);
 };
 
 // Adds an s character if the given quantity is plural
 const plural = (number: number, noun: string) => number === 1 ? number + noun : number + noun + 's';
 
-export { db, auth, getCollection, getDoc, verifyIsAuthenticated, verifyDocPermission, sendEmail, stockPriceHelper, plural };
+export { auth, getCollection, getDoc, verifyIsAuthenticated, verifyDocPermission, sendEmail, stockPriceHelper, plural };

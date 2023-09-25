@@ -1,5 +1,5 @@
 import { onSchedule } from "firebase-functions/v2/scheduler";
-import { db, plural, sendEmail, stockPriceHelper } from "./helpers";
+import { getCollection, getDoc, plural, sendEmail, stockPriceHelper } from "./helpers";
 import { logger } from "firebase-functions";
 
 const checkAlerts = onSchedule({
@@ -12,7 +12,7 @@ const checkAlerts = onSchedule({
     let errorOccurred = false;
     let alertsSent = 0;
 
-    const activeAlerts = await db.collection('alerts')
+    const activeAlerts = await getCollection('alerts')
         .where('active', '==', true)
         .get()
         .then(alert => {
@@ -42,7 +42,7 @@ const checkAlerts = onSchedule({
                 await sendEmail(alert.userId, `Stock alert for ${alert.ticker}!`, emailHtml);
 
                 logger.info('Email sent to ...! Deactivating alert...');
-                await db.collection("alerts").doc(alert.id).update({active: false});
+                await getDoc(`alerts/${alert.id}`).update({ active: false });
                 alertsSent++;
                 logger.info(`Processing for alert ${alert.id} completed successfully`);
             }
