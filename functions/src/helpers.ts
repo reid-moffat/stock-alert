@@ -9,7 +9,8 @@ const db = admin.firestore();
 const auth = admin.auth();
 
 // Helpers for getting a doc/collection
-
+const getCollection = (path: string) => db.collection(path);
+const getDoc = (path: string) => db.doc(path);
 
 // Check if the requesting user is authenticated
 const verifyIsAuthenticated = (request: CallableContext) => {
@@ -25,7 +26,7 @@ const verifyIsAuthenticated = (request: CallableContext) => {
 const verifyDocPermission = async (context: CallableContext, path: string) => {
     verifyIsAuthenticated(context);
 
-    await db.doc(path)
+    await getDoc(path)
         .get()
         .then((doc) => {
             if (!doc.exists) {
@@ -100,4 +101,4 @@ const sendEmail = async (recipient: string, subject: string, htmlBody: string) =
 // Adds an s character if the given quantity is plural
 const plural = (number: number, noun: string) => number === 1 ? number + noun : number + noun + 's';
 
-export { db, auth, verifyIsAuthenticated, verifyDocPermission, sendEmail, stockPriceHelper, plural };
+export { db, auth, getCollection, getDoc, verifyIsAuthenticated, verifyDocPermission, sendEmail, stockPriceHelper, plural };
