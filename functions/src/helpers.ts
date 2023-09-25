@@ -110,6 +110,6 @@ const sendEmail = async (emailAddress: string, subject: string, htmlBody: string
 };
 
 // Adds an s character if the given quantity is plural
-const plural = (number: number, noun: string) => number === 1 ? number + noun : number + noun + 's';
+const plural = (number: number, noun: string) => number === 1 ? number + ' ' + noun : number + ' ' + noun + 's';
 
 export { auth, getCollection, getDoc, verifyIsAuthenticated, verifyDocPermission, sendEmail, stockPriceHelper, plural };
