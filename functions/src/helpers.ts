@@ -1,5 +1,5 @@
 import * as admin from 'firebase-admin';
-import {HttpsError} from "firebase-functions/v2/https";
+import { HttpsError } from "firebase-functions/v2/https";
 import axios from "axios";
 
 admin.initializeApp();
@@ -74,4 +74,4 @@ const sendEmail = async (recipient: string, subject: string, htmlBody: string) =
         .add(email);
 };
 
-export {db, auth, verifySecrets, sendEmail, stockPriceHelper};
+export { db, auth, verifySecrets, sendEmail, stockPriceHelper };

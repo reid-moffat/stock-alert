@@ -1,5 +1,5 @@
-import {HttpsError, onCall} from "firebase-functions/v2/https";
-import {auth} from "./helpers";
+import { HttpsError, onCall } from "firebase-functions/v2/https";
+import { auth } from "./helpers";
 import * as logger from "firebase-functions/logger";
 
 const createAccount = onCall((request) => {
@@ -26,4 +26,4 @@ const createAccount = onCall((request) => {
     }
 );
 
-export {createAccount};
+export { createAccount };

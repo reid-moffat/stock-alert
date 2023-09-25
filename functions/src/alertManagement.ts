@@ -1,5 +1,5 @@
-import {onCall} from "firebase-functions/v2/https";
-import {db, stockPriceHelper, verifySecrets} from "./helpers";
+import { onCall } from "firebase-functions/v2/https";
+import { db, stockPriceHelper, verifySecrets } from "./helpers";
 import * as admin from 'firebase-admin';
 
 const getAlerts = onCall((request) => {
@@ -52,4 +52,4 @@ const deleteAlert = onCall((request) => {
         .catch((err) => `Error deleting alert with ID '${id}': ${err}`);
 });
 
-export {getAlerts, addAlert, deleteAlert, getStockPrice};
+export { getAlerts, addAlert, deleteAlert, getStockPrice };

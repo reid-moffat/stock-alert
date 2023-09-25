@@ -1,6 +1,6 @@
 import React from 'react';
-import {signUp} from '../backend/endpoints.js'
-import {Navigate} from 'react-router';
+import { signUp } from '../backend/endpoints.js'
+import { Navigate } from 'react-router';
 
 class SignupForm extends React.Component {
     constructor(props) {

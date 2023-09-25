@@ -1,6 +1,6 @@
-import {onSchedule} from "firebase-functions/v2/scheduler";
-import {db, sendEmail, stockPriceHelper, verifySecrets} from "./helpers";
-import {logger} from "firebase-functions";
+import { onSchedule } from "firebase-functions/v2/scheduler";
+import { db, sendEmail, stockPriceHelper, verifySecrets } from "./helpers";
+import { logger } from "firebase-functions";
 
 const checkAlerts = onSchedule({
     schedule: '*/5 * * * *',
@@ -60,4 +60,4 @@ const checkAlerts = onSchedule({
     logger.info(`Cron job checkAlerts successfully completed. ${activeAlerts.length} alerts checked, ${alertsSent} alerts sent`);
 });
 
-export {checkAlerts};
+export { checkAlerts };

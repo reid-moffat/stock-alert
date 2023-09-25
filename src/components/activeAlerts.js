@@ -1,5 +1,5 @@
 import React from 'react';
-import {getAlerts} from '../backend/endpoints.js'
+import { getAlerts } from '../backend/endpoints.js'
 import "../styles/home.css";
 
 class ActiveAlerts extends React.Component {

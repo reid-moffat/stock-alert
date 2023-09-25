@@ -1,6 +1,6 @@
-import {getFunctions, httpsCallable} from "firebase/functions";
-import {signInWithEmailAndPassword} from "firebase/auth";
-import {auth} from "./firebase";
+import { getFunctions, httpsCallable } from "firebase/functions";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "./firebase";
 
 export const signUp = async (email, password) => {
     const addMessage = httpsCallable(getFunctions(), 'createAccount');
