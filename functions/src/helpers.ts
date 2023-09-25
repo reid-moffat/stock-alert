@@ -88,8 +88,8 @@ const stockPriceHelper = async (ticker: string) : Promise<String> => {
         method: 'GET',
         url: process.env.STOCK_API_URL + ticker,
         headers: {
-            'X-RapidAPI-Key': process.env.STOCK_API_KEY + '',
-            'X-RapidAPI-Host': process.env.STOCK_API_HOST + ''
+            'X-RapidAPI-Key': process.env.STOCK_API_KEY,
+            'X-RapidAPI-Host': process.env.STOCK_API_HOST
         },
     };
 
