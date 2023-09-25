@@ -1,5 +1,5 @@
 import { onCall } from "firebase-functions/v2/https";
-import { db, stockPriceHelper } from "./helpers";
+import { auth, db, stockPriceHelper } from "./helpers";
 import * as admin from 'firebase-admin';
 
 const getAlerts = onCall((request) => {
@@ -31,6 +31,8 @@ const addAlert = onCall((request) => {
         active: true,
         // @ts-ignore
         userId: request.auth.uid,
+        // @ts-ignore
+        email: auth.getUser(request.auth.uid)
     };
 
     return db.collection('alerts')
