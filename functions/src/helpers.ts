@@ -17,7 +17,7 @@ const getCollection = (path: string) => {
     return db.collection(path);
 }
 const getDoc = (path: string) => {
-    if (!/^\/[a-zA-Z0-9]+\/{2}(([a-zA-Z0-9]+\/){2})*$/.test(path)) {
+    if (!/^\/([a-zA-Z0-9]+\/){2}(([a-zA-Z0-9]+\/){2})*$/.test(path)) {
         throw new HttpsError('internal', `Invalid document path (${path}), see regex`);
     }
 
