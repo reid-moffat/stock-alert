@@ -8,14 +8,41 @@ admin.initializeApp();
 const db = admin.firestore();
 const auth = admin.auth();
 
+// Helpers for getting a doc/collection
+
+
 // Check if the requesting user is authenticated
-const verifyIsAuthenticated = (request: CallableContext, name: string) => {
+const verifyIsAuthenticated = (request: CallableContext) => {
     if (!request.auth || !request.auth.uid) {
         throw new HttpsError(
             'unauthenticated',
-            `You must be logged in to call the API endpoint ${name}`
+            `You must be logged in to call the API`
         );
     }
+};
+
+// Verify the user who called the function has access to the specified job (authenticated + owns the doc)
+const verifyDocPermission = async (context: CallableContext, path: string) => {
+    verifyIsAuthenticated(context);
+
+    await db.doc(path)
+        .get()
+        .then((doc) => {
+            if (!doc.exists) {
+                throw new HttpsError(
+                    'not-found',
+                    `The document '${path}' does not exist`
+                );
+            }
+
+            if (doc.data()?.userId !== context.auth?.uid) {
+                throw new HttpsError(
+                    'permission-denied',
+                    `You cannot view the document '${path}' as it doesn't belong to you`
+                );
+            }
+            return null;
+        });
 };
 
 // Gets the price of a stock
@@ -73,4 +100,4 @@ const sendEmail = async (recipient: string, subject: string, htmlBody: string) =
 // Adds an s character if the given quantity is plural
 const plural = (number: number, noun: string) => number === 1 ? number + noun : number + noun + 's';
 
-export { db, auth, verifyIsAuthenticated, sendEmail, stockPriceHelper, plural };
+export { db, auth, verifyIsAuthenticated, verifyDocPermission, sendEmail, stockPriceHelper, plural };

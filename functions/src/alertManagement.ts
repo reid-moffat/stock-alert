@@ -1,11 +1,11 @@
 import { onCall } from "firebase-functions/v2/https";
-import { auth, db, stockPriceHelper, verifyIsAuthenticated } from "./helpers";
+import { auth, db, stockPriceHelper, verifyDocPermission, verifyIsAuthenticated } from "./helpers";
 import * as admin from 'firebase-admin';
 import { logger }  from "firebase-functions";
 
 const getAlerts = onCall((request) => {
 
-    verifyIsAuthenticated(request, 'getAlerts');
+    verifyIsAuthenticated(request);
 
     return db.collection('alerts')
         // @ts-ignore
@@ -24,7 +24,7 @@ const getAlerts = onCall((request) => {
 const getStockPrice = onCall({secrets: ["STOCK_API_URL", "STOCK_API_KEY", "STOCK_API_HOST"]},
     (request) => {
 
-        verifyIsAuthenticated(request, 'getStockPrice');
+        verifyIsAuthenticated(request);
 
         return stockPriceHelper(request.data.ticker);
     });
@@ -33,7 +33,7 @@ const addAlert = onCall(async (request) => {
 
     logger.info(`Starting function addAlert...`);
 
-    verifyIsAuthenticated(request, 'addAlert');
+    verifyIsAuthenticated(request);
 
     const newAlert = {
         ticker: request.data.ticker,
@@ -57,7 +57,7 @@ const addAlert = onCall(async (request) => {
 
 const deleteAlert = onCall((request) => {
 
-    verifyIsAuthenticated(request, 'deleteAlert');
+    verifyDocPermission(request, request.data.alertId);
 
     const id = request.data.alertId;
 
@@ -67,5 +67,7 @@ const deleteAlert = onCall((request) => {
         .then(() => `Successfully deleted alert with ID ${id}`)
         .catch((err) => `Error deleting alert with ID '${id}': ${err}`);
 });
+
+// make an update alert function
 
 export { getAlerts, addAlert, deleteAlert, getStockPrice };
