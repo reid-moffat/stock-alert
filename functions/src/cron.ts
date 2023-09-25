@@ -37,10 +37,14 @@ const checkAlerts = onSchedule({
             }
 
             if ((alert.increase === true && stockPrice > alert.target) || (alert.increase === false && stockPrice < alert.target)) {
+                logger.info(`Stock alert '${alert.id}' (${alert.ticker} @$${alert.target}) triggered, sending email to ...`);
                 const emailHtml = `Stock alert triggered!<br>Ticker: ${alert.ticker}<br>Current price: ${stockPrice}<br>Alert value: ${alert.target}`;
                 await sendEmail(alert.userId, `Stock alert for ${alert.ticker}!`, emailHtml);
+
+                logger.info('Email sent to ...! Deactivating alert...');
                 await db.collection("alerts").doc(alert.id).update({active: false});
                 alertsSent++;
+                logger.info(`Processing for alert ${alert.id} completed successfully`);
             }
         } catch (error) {
             errorOccurred = true;
