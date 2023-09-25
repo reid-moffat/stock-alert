@@ -96,9 +96,9 @@ const stockPriceHelper = (ticker: string): Promise<String> => {
 };
 
 // Sends an email with the given data to the given user ID
-const sendEmail = async (recipient: string, subject: string, htmlBody: string) => {
+const sendEmail = async (emailAddress: string, subject: string, htmlBody: string) => {
     const email = {
-        to: (await auth.getUser(recipient)).email,
+        to: emailAddress,
         message: {
             subject: subject,
             html: htmlBody,

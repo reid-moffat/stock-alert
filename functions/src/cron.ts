@@ -39,7 +39,7 @@ const checkAlerts = onSchedule({
             if ((alert.increase === true && stockPrice > alert.target) || (alert.increase === false && stockPrice < alert.target)) {
                 logger.info(`Stock alert '${alert.id}' (${alert.ticker} @$${alert.target}) triggered, sending email to ...`);
                 const emailHtml = `Stock alert triggered!<br>Ticker: ${alert.ticker}<br>Current price: ${stockPrice}<br>Alert value: ${alert.target}`;
-                await sendEmail(alert.userId, `Stock alert for ${alert.ticker}!`, emailHtml);
+                await sendEmail(alert.email, `Stock alert for ${alert.ticker}!`, emailHtml);
 
                 logger.info('Email sent to ...! Deactivating alert...');
                 await getDoc(`alerts/${alert.id}`).update({ active: false });
