@@ -6,18 +6,10 @@ admin.initializeApp();
 const db = admin.firestore();
 const auth = admin.auth();
 
-const stockApiReq = {
-    method: '',
-    url: '',
-    headers: {
-        'X-RapidAPI-Key': '',
-        'X-RapidAPI-Host': ''
-    },
-};
+// Gets the price of a stock
+const stockPriceHelper = (ticker: string): Promise<String> => {
 
-// Verifies a secret value is not null/undefined/empty
-const verifySecrets = () => {
-
+    // Verifies secret values are present
     const secrets: string[] = [
         "STOCK_API_URL",
         "STOCK_API_KEY",
@@ -38,28 +30,20 @@ const verifySecrets = () => {
         }
     }
 
-    // Setup API req data
-    stockApiReq.method = 'GET';
-    stockApiReq.url = process.env.STOCK_API_URL + '';
-    stockApiReq.headers = {
-        'X-RapidAPI-Key': process.env.STOCK_API_KEY + '',
-        'X-RapidAPI-Host': process.env.STOCK_API_HOST + ''
+    // Setup req
+    const stockApiReq = {
+        method: 'GET',
+        url: process.env.STOCK_API_URL + ticker,
+        headers: {
+            'X-RapidAPI-Key': process.env.STOCK_API_KEY + '',
+            'X-RapidAPI-Host': process.env.STOCK_API_HOST + ''
+        },
     };
-};
-
-//
-const stockPriceHelper = (ticker: string): Promise<String> => {
-
-    if (stockApiReq.url === '' || stockApiReq.method === '') {
-        throw new HttpsError('internal', "You need to call verifySecrets() before getStockPrice");
-    }
-
-    stockApiReq.url = process.env.STOCK_API_URL + ticker;
 
     return axios.request(stockApiReq).then(rsp => rsp.data.price);
 };
 
-// Sends
+// Sends an email with the given data to the given user ID
 const sendEmail = async (recipient: string, subject: string, htmlBody: string) => {
     const email = {
         to: (await auth.getUser(recipient)).email,
@@ -74,4 +58,4 @@ const sendEmail = async (recipient: string, subject: string, htmlBody: string) =
         .add(email);
 };
 
-export { db, auth, verifySecrets, sendEmail, stockPriceHelper };
+export { db, auth, sendEmail, stockPriceHelper };

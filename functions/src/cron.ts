@@ -1,13 +1,11 @@
 import { onSchedule } from "firebase-functions/v2/scheduler";
-import { db, sendEmail, stockPriceHelper, verifySecrets } from "./helpers";
+import { db, sendEmail, stockPriceHelper } from "./helpers";
 import { logger } from "firebase-functions";
 
 const checkAlerts = onSchedule({
     schedule: '*/5 * * * *',
     secrets: ["STOCK_API_URL", "STOCK_API_KEY", "STOCK_API_HOST"]
 }, async (event) => {
-
-    verifySecrets();
 
     let errorOccurred = false;
     let alertsSent = 0;

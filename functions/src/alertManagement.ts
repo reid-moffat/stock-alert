@@ -1,5 +1,5 @@
 import { onCall } from "firebase-functions/v2/https";
-import { db, stockPriceHelper, verifySecrets } from "./helpers";
+import { db, stockPriceHelper } from "./helpers";
 import * as admin from 'firebase-admin';
 
 const getAlerts = onCall((request) => {
@@ -19,9 +19,6 @@ const getAlerts = onCall((request) => {
 
 const getStockPrice = onCall({secrets: ["STOCK_API_URL", "STOCK_API_KEY", "STOCK_API_HOST"]},
     (request) => {
-
-        verifySecrets();
-
         return stockPriceHelper(request.data.ticker);
     });
 
