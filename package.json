@@ -4,7 +4,6 @@
   "private": true,
   "homepage": "https://reid-moffat.github.io/stock-alert/",
   "dependencies": {
-    "@testing-library/jest-dom": "^6.1.3",
     "@testing-library/user-event": "^14.5.1",
     "axios": "^1.5.0",
     "firebase": "^10.4.0",
@@ -43,6 +42,7 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^6.1.3",
     "@testing-library/react": "^14.0.0"
   }
 }
