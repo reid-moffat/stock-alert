@@ -22,7 +22,7 @@ const getStockPrice = onCall({secrets: ["STOCK_API_URL", "STOCK_API_KEY", "STOCK
         return stockPriceHelper(request.data.ticker);
     });
 
-const addAlert = onCall((request) => {
+const addAlert = onCall(async (request) => {
     const newAlert = {
         ticker: request.data.ticker,
         increase: true,
@@ -32,7 +32,7 @@ const addAlert = onCall((request) => {
         // @ts-ignore
         userId: request.auth.uid,
         // @ts-ignore
-        email: auth.getUser(request.auth.uid)
+        email: await auth.getUser(request.auth.uid)
     };
 
     return db.collection('alerts')
