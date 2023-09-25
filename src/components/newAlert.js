@@ -8,7 +8,8 @@ class NewAlert extends React.Component {
         this.state = {
             list: [],
             stock: '',
-            target: 0
+            target: 0,
+            errorMessage: ''
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.stockChange = this.stockChange.bind(this);
@@ -26,7 +27,8 @@ class NewAlert extends React.Component {
         const yyyy = today.getFullYear();
 
         today = mm + '/' + dd + '/' + yyyy;
-        const result = await addAlert({ticker: this.state.stock, target: this.state.target});
+        const result = await addAlert({ticker: this.state.stock, target: this.state.target})
+            .catch((err) => this.setState({ errorMessage: err.message }));
         console.log("Add alert result: " + JSON.stringify(result, null, 4));
     }
 
@@ -51,6 +53,7 @@ class NewAlert extends React.Component {
                     <input type="text" name="stock" class="field" style={{ 'text-transform': 'uppercase' }} onKeyPress={(e) => this.stockChange(e)}/>
                     <label> Alert Price </label>
                     <input type="number" name="target" class="field" onChange={this.targetChange}/>
+                    {this.state.errorMessage && <h3 style={{ color: 'red' }}>{this.state.errorMessage}</h3>}
                     <input type="submit" class="add-btn btn" value="Add Alert" onClick={this.handleSubmit}/>
                 </div>
             </>
