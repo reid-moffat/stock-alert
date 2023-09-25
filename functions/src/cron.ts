@@ -1,11 +1,13 @@
 import { onSchedule } from "firebase-functions/v2/scheduler";
-import { db, sendEmail, stockPriceHelper } from "./helpers";
+import { db, plural, sendEmail, stockPriceHelper } from "./helpers";
 import { logger } from "firebase-functions";
 
 const checkAlerts = onSchedule({
     schedule: '*/5 * * * *',
     secrets: ["STOCK_API_URL", "STOCK_API_KEY", "STOCK_API_HOST"]
 }, async (event) => {
+
+    logger.info('Cron job checkAlerts starting...');
 
     let errorOccurred = false;
     let alertsSent = 0;
@@ -23,27 +25,22 @@ const checkAlerts = onSchedule({
             })
         });
 
+    logger.info(`Successfully queried ${plural(activeAlerts.length, 'active alert')}`);
+
     for (const alert of activeAlerts) {
         try {
             const stockPrice = await stockPriceHelper(alert.ticker);
 
-            if (alert.increase === true) {
-                if (stockPrice > alert.target) {
-                    await sendEmail(alert.userId, `Stock alert for ${alert.ticker}!`,
-                        `Stock alert triggered!<br>Ticker: ${alert.ticker}<br>Current price: ${stockPrice}<br>Alert value: ${alert.target}`);
-                    await db.collection("alerts").doc(alert.id).update({active: false});
-                    alertsSent++;
-                }
-            } else if (alert.increase === false) {
-                if (stockPrice < alert.target) {
-                    await sendEmail(alert.userId, `Stock alert for ${alert.ticker}!`,
-                        `Stock alert triggered!<br>Ticker: ${alert.ticker}<br>Current price: ${stockPrice}<br>Alert value: ${alert.target}`);
-                    await db.collection("alerts").doc(alert.id).update({active: false});
-                    alertsSent++;
-                }
-            } else {
+            if (alert.increase !== true && alert.increase !== false) {
                 errorOccurred = true;
                 logger.error(`Invalid alert.increase value for alert with id '${alert.id}': ${alert.increase}`);
+            }
+
+            if ((alert.increase === true && stockPrice > alert.target) || (alert.increase === false && stockPrice < alert.target)) {
+                const emailHtml = `Stock alert triggered!<br>Ticker: ${alert.ticker}<br>Current price: ${stockPrice}<br>Alert value: ${alert.target}`;
+                await sendEmail(alert.userId, `Stock alert for ${alert.ticker}!`, emailHtml);
+                await db.collection("alerts").doc(alert.id).update({active: false});
+                alertsSent++;
             }
         } catch (error) {
             errorOccurred = true;
@@ -52,10 +49,10 @@ const checkAlerts = onSchedule({
     }
 
     if (errorOccurred) {
-        throw new Error("See logs above");
+        throw new Error("Error checking/sending alerts; logs above");
     }
 
-    logger.info(`Cron job checkAlerts successfully completed. ${activeAlerts.length} alerts checked, ${alertsSent} alerts sent`);
+    logger.info(`Cron job checkAlerts successfully completed. ${activeAlerts.length} alerts checked, ${plural(alertsSent, 'alert')} sent`);
 });
 
 export { checkAlerts };
