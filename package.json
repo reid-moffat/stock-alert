@@ -5,7 +5,7 @@
   "homepage": "https://reid-moffat.github.io/stock-alert/",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.1",
-    "@testing-library/react": "^12.1.2",
+    "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.25.0",
     "firebase": "^9.23.0",
