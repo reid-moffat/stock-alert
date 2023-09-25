@@ -60,13 +60,12 @@ class NewAlert extends React.Component {
     }
 
     stockChange(event) {
-        console.log(event.target.value)
-        const temp = event.target.value;
-        this.setState({stock: temp})
+        console.log(event.target.value);
+        this.setState({stock: event.target.value.toUpperCase()});
     }
 
     targetChange(event) {
-        this.setState({target: event.target.value})
+        this.setState({target: event.target.value});
     }
 
     render() {
