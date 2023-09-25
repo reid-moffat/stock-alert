@@ -2,6 +2,7 @@ import * as admin from 'firebase-admin';
 import { HttpsError } from "firebase-functions/v2/https";
 import axios from "axios";
 import { CallableContext } from "firebase-functions/lib/common/providers/https";
+import { logger } from "firebase-functions";
 
 // Initialize the app and required SDKs
 admin.initializeApp();
@@ -59,7 +60,7 @@ const verifyDocPermission = async (context: CallableContext, path: string) => {
 };
 
 // Gets the price of a stock
-const stockPriceHelper = (ticker: string): Promise<String> => {
+const stockPriceHelper = async (ticker: string) : Promise<String> => {
 
     // Verifies secret values are present
     const secrets: string[] = [
@@ -92,7 +93,17 @@ const stockPriceHelper = (ticker: string): Promise<String> => {
         },
     };
 
-    return axios.request(stockApiReq).then(rsp => rsp.data.price);
+    return axios.request(stockApiReq)
+        .then((rsp) => rsp.data.price)
+        .catch((err: any) => {
+            if (err.response.data === "Invalid Stock Ticker") {
+                logger.info(`Attempted to check invalid stock ticker: ${ticker}`);
+                throw new HttpsError('not-found', `Stock ticker ${ticker} is invalid`);
+            }
+
+            logger.error(`Error getting stock price for ${ticker}: ${stringifyObject(err)}`);
+            throw new HttpsError('internal', `Error getting stock price for ${ticker}, please try again later`);
+        });
 };
 
 // Sends an email with the given data to the given user ID
@@ -111,5 +122,17 @@ const sendEmail = async (emailAddress: string, subject: string, htmlBody: string
 
 // Adds an s character if the given quantity is plural
 const plural = (number: number, noun: string) => number === 1 ? number + ' ' + noun : number + ' ' + noun + 's';
+
+// Turns an object into a pretty string (ignores self-referencing loops)
+const stringifyObject = (obj: object) => {
+    const cache: any[] = [];
+    return JSON.stringify(obj, (key, value) => {
+        if (typeof value === 'object' && value !== null) {
+            if (cache.includes(value)) return; // Duplicate reference found, discard key
+            cache.push(value); // Store value in our collection
+        }
+        return value;
+    });
+}
 
 export { auth, getCollection, getDoc, verifyIsAuthenticated, verifyDocPermission, sendEmail, stockPriceHelper, plural };
