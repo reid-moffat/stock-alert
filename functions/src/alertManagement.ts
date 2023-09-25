@@ -1,4 +1,5 @@
 import { onCall } from "firebase-functions/v2/https";
+import { HttpsError } from "firebase-functions/v2/https";
 import {
     auth,
     getCollection,
@@ -9,6 +10,7 @@ import {
 } from "./helpers";
 import * as admin from 'firebase-admin';
 import { logger }  from "firebase-functions";
+import isNumber = require('is-number');
 
 const getAlerts = onCall((request) => {
 
@@ -41,6 +43,17 @@ const addAlert = onCall({ secrets: ["STOCK_API_URL", "STOCK_API_KEY", "STOCK_API
 
     logger.info(`Starting function addAlert...`);
     verifyIsAuthenticated(request);
+
+    logger.info(`Verifying input...`);
+    if (!request.data.ticker || !/[A-Z]+/.test(request.data.ticker)) {
+        throw new HttpsError('invalid-argument', `Alert ticker invalid; must be all uppercase letters. Value: ${request.data.ticker}`);
+    }
+    if (!isNumber(request.data.target)) {
+        throw new HttpsError('invalid-argument', `Alert target must be a number. Value: ${request.data.target}`);
+    }
+    if (+request.data.target <= 0) {
+        throw new HttpsError('invalid-argument', `Alert target must be a positive number. Value: ${request.data.target}`);
+    }
 
     logger.info(`Verify stock ticker exists...`);
     await stockPriceHelper(request.data.ticker);
