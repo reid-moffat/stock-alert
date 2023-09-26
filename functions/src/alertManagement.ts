@@ -10,7 +10,6 @@ import {
 } from "./helpers";
 import * as admin from 'firebase-admin';
 import { logger }  from "firebase-functions";
-import isNumber = require('is-number');
 
 const getAlerts = onCall((request) => {
 
