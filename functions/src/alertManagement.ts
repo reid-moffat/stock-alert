@@ -48,7 +48,7 @@ const addAlert = onCall({ secrets: ["STOCK_API_URL", "STOCK_API_KEY", "STOCK_API
     if (!request.data.ticker || !/[A-Z]+/.test(request.data.ticker)) {
         throw new HttpsError('invalid-argument', `Alert ticker invalid; must be all uppercase letters. Value: ${request.data.ticker}`);
     }
-    if (!isNumber(request.data.target)) {
+    if (!/^[0-9]+.[0-9]{2}$/.test(request.data.target) && +request.data.target !== 0) {
         throw new HttpsError('invalid-argument', `Alert target must be a number. Value: ${request.data.target}`);
     }
     if (+request.data.target <= 0) {
