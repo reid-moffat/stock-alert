@@ -37,11 +37,13 @@ const checkAlerts = onSchedule({
             }
 
             if ((alert.increase === true && stockPrice > alert.target) || (alert.increase === false && stockPrice < alert.target)) {
-                logger.info(`Stock alert '${alert.id}' (${alert.ticker} @$${alert.target}) triggered, sending email to ${alert.email}...`);
+                logger.info("");
+                logger.info(`--- Stock alert '${alert.id}' (${alert.ticker} @$${alert.target}) triggered ---`);
+                logger.info(`Sending email to ${alert.email}...`);
                 const emailHtml = `Stock alert triggered!<br>Ticker: ${alert.ticker}<br>Current price: ${stockPrice}<br>Alert value: ${alert.target}`;
                 await sendEmail(alert.email, `Stock alert for ${alert.ticker}!`, emailHtml);
 
-                logger.info(`Email sent to ${alert.email}! Deactivating alert...`);
+                logger.info(`Deactivating alert in database...`);
                 await getDoc(`/alerts/${alert.id}/`).update({ active: false });
                 alertsSent++;
 
@@ -57,6 +59,7 @@ const checkAlerts = onSchedule({
         throw new Error("Error checking/sending alerts; logs above");
     }
 
+    if (alertsSent > 0) logger.info("");
     logger.info(`Cron job checkAlerts successfully completed. ${activeAlerts.length} alerts checked, ${plural(alertsSent, 'alert')} sent`);
 });
 
