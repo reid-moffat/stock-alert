@@ -1,6 +1,8 @@
 import React from 'react';
 import { signIn } from '../backend/endpoints.js'
 import { Navigate } from 'react-router';
+import './activeAlerts.js';
+import ActiveAlerts from './activeAlerts.js';
 
 class LoginForm extends React.Component {
     constructor(props) {
@@ -25,7 +27,7 @@ class LoginForm extends React.Component {
 
     render() {
         if (this.state.loggedIn === true) {
-            return <Navigate to='/stock-alert/home'/>
+            return <ActiveAlerts/>
         }
 
         return (
