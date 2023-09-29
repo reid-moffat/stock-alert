@@ -46,18 +46,7 @@ class LoginSignup extends React.Component {
     render() {
         return (
             <>
-                <Header/>
-                <div class="row">
-                    <div class="login-left">
-                        <div class="login-title">Get alerts on your stocks!</div>
-                        <img
-                            alt="Stock Alert logo" className="stock-img"
-                            src={process.env.PUBLIC_URL + '/stock_prices.png'}
-                        />
-
-                    </div>
-                    <div class="login-right">{this.renderAuthForm()}</div>
-                </div>
+                <div class="login-right">{this.renderAuthForm()}</div>
             </>
         );
     }

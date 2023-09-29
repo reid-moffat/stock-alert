@@ -7,8 +7,7 @@ function App() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/stock-alert" element={<LoginSignup/>}/>
-                <Route path="/stock-alert/home" element={<Home/>}/>
+                <Route path="/stock-alert/" element={<Home/>}/>
             </Routes>
         </BrowserRouter>
     );

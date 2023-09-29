@@ -1,5 +1,6 @@
 import React from 'react';
 import { addAlert } from '../backend/endpoints.js';
+import "../styles/custom.scss";
 import "../styles/home.css";
 
 class NewAlert extends React.Component {
@@ -7,6 +8,7 @@ class NewAlert extends React.Component {
         super(props);
         this.state = {
             list: [],
+            email: '',
             stock: '',
             target: 0,
             errorMessage: ''
@@ -54,6 +56,9 @@ class NewAlert extends React.Component {
             <>
                 <div class="new-alert">
                     <h1>New Alert</h1>
+
+                    <label>Email</label>
+                    <input type="email" name="email" class="field"/>
                     <label>Stock Name</label>
                     <input type="text" name="stock" class="field" style={{ 'text-transform': 'uppercase' }}
                            onKeyDown={(e) => this.stockTickerInput(e)} onChange={(e) => this.stockChange(e)}/>
