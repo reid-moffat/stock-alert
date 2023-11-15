@@ -31,12 +31,12 @@ const sendPasswordResetEmail = onCall(async (request) => {
     const emailAddress: string = request.data.email;
     const link: string = await auth.generatePasswordResetLink(emailAddress);
 
-    const subject = 'Reset your password for qtma-2023-2024';
+    const subject = 'Reset your password for Stock Alert';
     const body = `<p style="font-size: 16px;">A password reset request was made for your account</p>
                    <p style="font-size: 16px;">Reset your password here: ${link}</p>
                    <p style="font-size: 12px;">If you didn't request this, you can safely disregard this email</p>
                    <p style="font-size: 12px;">Best Regards,</p>
-                   <p style="font-size: 12px;">-The qtma-2023-2024 Team</p>`;
+                   <p style="font-size: 12px;">-The Stock Alert team</p>`;
 
     return sendEmail(emailAddress, subject, body)
         .then(() => {
