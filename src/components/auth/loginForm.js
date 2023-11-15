@@ -1,6 +1,5 @@
 import React from 'react';
 import { signIn } from '../../backend/endpoints.js'
-import { Navigate } from 'react-router';
 import '../alerts/activeAlerts.js';
 import ActiveAlerts from '../alerts/activeAlerts.js';
 

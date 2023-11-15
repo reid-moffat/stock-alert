@@ -1,5 +1,4 @@
 import React from 'react';
-import ActiveAlerts from '../components/alerts/activeAlerts.js';
 import NewAlert from '../components/alerts/newAlert.js';
 import Header from '../components/header.js';
 import LoginSignup from '../components/auth/auth.js';
@@ -14,18 +13,14 @@ class Home extends React.Component {
     }
 
     navAlerts = () => {
-        this.setState({activealerts: true})
+        this.setState({ activealerts: true })
     }
 
     navNew = () => {
-        this.setState({activealerts: false})
+        this.setState({ activealerts: false })
     }
 
     render() {
-        //const inactive = "outline-button";
-        //const active = inactive + " active";
-        //const body = this.state.activealerts ? <ActiveAlerts/> : <NewAlert/>;
-
         return (
             <>
                 <Header/>
