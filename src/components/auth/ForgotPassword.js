@@ -11,7 +11,7 @@ class ForgotPassword extends React.Component {
 
     handleSubmit = (event) => {
         forgotPassword(event.target.email.value)
-            .then()
+            .then(() => {})
             .catch(() => {});
 
         event.preventDefault();

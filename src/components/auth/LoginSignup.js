@@ -43,26 +43,11 @@ class LoginSignup extends React.Component {
     renderAuthForm = () => {
         switch (this.state.currState) {
             case this.states.LogIn:
-                return (
-                    <>
-                        <LoginForm onLogin={this.handleLogin} forgotPassword={this.toPasswordReset}/>
-                        <br/>
-                        Don't have an account? <button class="login-line-button" onClick={this.toSignup}>Sign up</button>
-                    </>
-                );
+                return <LoginForm onLogin={this.handleLogin} forgotPassword={this.toPasswordReset} toSignup={this.toSignup}/>;
             case this.states.SignUp:
-                return (
-                    <>
-                        <SignupForm onLogin={this.handleLogin}/>
-                        Already have an account? <button class="login-line-button" onClick={this.toLogin}>Login</button>
-                    </>
-                );
+                return <SignupForm onLogin={this.handleLogin} toLogin={this.toLogin}/>;
             case this.states.ForgotPassword:
-                return (
-                    <>
-                        <ForgotPassword/>
-                    </>
-                );
+                return <ForgotPassword/>;
             default:
                 throw new Error("Invalid LoginSignup page state: " + this.state.currState);
         }
