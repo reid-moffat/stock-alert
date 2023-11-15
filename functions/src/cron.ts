@@ -56,7 +56,7 @@ const checkAlerts = onSchedule({
     }
 
     if (errorOccurred) {
-        throw new Error("Error checking/sending alerts; logs above");
+        throw new Error("Error checking/sending alerts; see logs above");
     }
 
     if (alertsSent > 0) logger.info("");

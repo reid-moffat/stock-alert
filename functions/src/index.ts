@@ -11,7 +11,7 @@
 // https://firebase.google.com/docs/functions/typescript
 
 import { addAlert, deleteAlert, getAlerts, getStockPrice } from './alertManagement';
-import { createAccount } from "./auth";
+import { createAccount, sendPasswordResetEmail } from "./auth";
 import { checkAlerts } from "./cron";
 
-export { getAlerts, createAccount, addAlert, deleteAlert, checkAlerts, getStockPrice };
+export { getAlerts, createAccount, sendPasswordResetEmail, addAlert, deleteAlert, checkAlerts, getStockPrice };
