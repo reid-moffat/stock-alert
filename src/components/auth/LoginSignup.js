@@ -4,22 +4,34 @@ import SignupForm from './SignupForm.js';
 import "../../styles/loginSignup.css";
 
 class LoginSignup extends React.Component {
+
     constructor(props) {
         super(props);
         this.state = {
-            signup: false
+            currState: this.states.LogIn,
         };
 
         this.toLogin = this.toLogin.bind(this);
         this.toSignup = this.toSignup.bind(this);
     }
 
+    // All states this form can be in
+    states = Object.freeze({
+        LogIn: 0,
+        SignUp: 1,
+        ForgotPassword: 2,
+    });
+
     toLogin = () => {
-        this.setState({signup: false});
+        this.setState({ currState: this.states.LogIn });
     }
 
     toSignup = () => {
-        this.setState({signup: true});
+        this.setState({ currState: this.states.SignUp });
+    }
+
+    toPasswordReset = () => {
+        this.setState({ currState: this.states.ForgotPassword });
     }
 
     handleLogin = () => {
@@ -28,21 +40,27 @@ class LoginSignup extends React.Component {
 
     // Renders login/sign up form based on state
     renderAuthForm = () => {
-        if (this.state.signup) {
-            return (
-                <>
-                    <SignupForm onLogin={this.handleLogin}/>
-                    Already have an account? <button class="login-line-button" onClick={this.toLogin}>Login</button>
-                </>
-            );
+        switch (this.state.currState) {
+            case this.states.LogIn:
+                return (
+                    <>
+                        <LoginForm onLogin={this.handleLogin} forgotPassword={this.forgotPassword}/>
+                        <br/>
+                        Don't have an account? <button class="login-line-button" onClick={this.toSignup}>Sign up</button>
+                    </>
+                );
+            case this.states.SignUp:
+                return (
+                    <>
+                        <SignupForm onLogin={this.handleLogin}/>
+                        Already have an account? <button class="login-line-button" onClick={this.toLogin}>Login</button>
+                    </>
+                );
+            case this.states.ForgotPassword:
+                break;
+            default:
+                throw new Error("Invalid LoginSignup page state: " + this.state.currState);
         }
-
-        return (
-            <>
-                <LoginForm onLogin={this.handleLogin}/>
-                Don't have an account? <button class="login-line-button" onClick={this.toSignup}>Sign up</button>
-            </>
-        );
     }
 
     render() {

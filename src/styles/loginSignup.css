@@ -28,6 +28,14 @@
     font-size: 16px;
 }
 
+.forgot-password-button {
+    border: none;
+    background-color: #fefefe;
+    padding: 0;
+    font-size: 16px;
+    color: #6380D4;
+}
+
 .login-line-button {
     border: none;
     background-color: #fefefe;
