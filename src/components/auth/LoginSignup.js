@@ -2,6 +2,7 @@ import React from 'react';
 import LoginForm from './LoginForm.js';
 import SignupForm from './SignupForm.js';
 import "../../styles/loginSignup.css";
+import ForgotPassword from "./ForgotPassword";
 
 class LoginSignup extends React.Component {
 
@@ -44,7 +45,7 @@ class LoginSignup extends React.Component {
             case this.states.LogIn:
                 return (
                     <>
-                        <LoginForm onLogin={this.handleLogin} forgotPassword={this.forgotPassword}/>
+                        <LoginForm onLogin={this.handleLogin} forgotPassword={this.toPasswordReset}/>
                         <br/>
                         Don't have an account? <button class="login-line-button" onClick={this.toSignup}>Sign up</button>
                     </>
@@ -57,7 +58,11 @@ class LoginSignup extends React.Component {
                     </>
                 );
             case this.states.ForgotPassword:
-                break;
+                return (
+                    <>
+                        <ForgotPassword/>
+                    </>
+                );
             default:
                 throw new Error("Invalid LoginSignup page state: " + this.state.currState);
         }
