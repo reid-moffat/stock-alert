@@ -1,7 +1,7 @@
 import React from 'react';
-import { addAlert } from '../backend/endpoints.js';
-import "../styles/custom.scss";
-import "../styles/home.css";
+import { addAlert } from '../../backend/endpoints.js';
+import "../../styles/custom.scss";
+import "../../styles/home.css";
 
 class NewAlert extends React.Component {
     constructor(props) {

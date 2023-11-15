@@ -1,6 +1,6 @@
 import React from 'react';
-import { getAlerts } from '../backend/endpoints.js'
-import "../styles/home.css";
+import { getAlerts } from '../../backend/endpoints.js'
+import "../../styles/home.css";
 
 class ActiveAlerts extends React.Component {
     constructor(props) {

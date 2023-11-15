@@ -1,8 +1,8 @@
 import React from 'react';
-import { signIn } from '../backend/endpoints.js'
+import { signIn } from '../../backend/endpoints.js'
 import { Navigate } from 'react-router';
-import './activeAlerts.js';
-import ActiveAlerts from './activeAlerts.js';
+import '../alerts/activeAlerts.js';
+import ActiveAlerts from '../alerts/activeAlerts.js';
 
 class LoginForm extends React.Component {
     constructor(props) {

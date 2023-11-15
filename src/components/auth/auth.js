@@ -2,7 +2,7 @@ import React from 'react';
 
 import LoginForm from './loginForm.js';
 import SignupForm from './signup.js';
-import "../styles/loginSignup.css";
+import "../../styles/loginSignup.css";
 
 class LoginSignup extends React.Component {
     constructor(props) {
