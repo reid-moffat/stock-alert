@@ -1,14 +1,10 @@
 import React from 'react';
 import { signIn } from '../../backend/endpoints.js'
-import '../alerts/activeAlerts.js';
-import ActiveAlerts from '../alerts/activeAlerts.js';
 
 class LoginForm extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            loggedIn: false
-        };
+        this.state = {};
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
@@ -16,21 +12,15 @@ class LoginForm extends React.Component {
         // SUBMIT BUTTON EVENT HANDLER
         signIn(event.target.email.value, event.target.password.value)
             .then(() => {
-                this.setState({loggedIn: true});
                 this.props.onLogin();
             })
         if (sessionStorage.getItem("uid") != null) {
-            this.setState({loggedIn: true})
             this.props.onLogin();
         }
         event.preventDefault();
     }
 
     render() {
-        if (this.state.loggedIn === true) {
-            return <ActiveAlerts/>
-        }
-
         return (
             <div class="form">
 
