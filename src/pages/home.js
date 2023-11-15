@@ -9,21 +9,12 @@ class Home extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            activealerts: true,
             loggedIn: false,
         };
     }
 
-    navAlerts = () => {
-        this.setState({ activealerts: true });
-    }
-
-    navNew = () => {
-        this.setState({ activealerts: false });
-    }
-
     handleLogin = () => {
-        this.setState({ loggedIn: true });
+        this.setState({loggedIn: true});
     }
 
     render() {
@@ -38,7 +29,7 @@ class Home extends React.Component {
                         <NewAlert/>
                     </div>
                 </div>
-                
+
             </>
         )
     }
