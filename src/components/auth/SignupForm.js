@@ -16,6 +16,7 @@ class SignupForm extends React.Component {
         signUp(event.target.email.value, event.target.password.value)
         if (sessionStorage.getItem("uid") != null) {
             this.setState({loggedin: true})
+            this.props.onLogin();
         }
         event.preventDefault();
     }

@@ -9,15 +9,20 @@ class Home extends React.Component {
         super(props);
         this.state = {
             activealerts: true,
+            loggedIn: false,
         };
     }
 
     navAlerts = () => {
-        this.setState({ activealerts: true })
+        this.setState({ activealerts: true });
     }
 
     navNew = () => {
-        this.setState({ activealerts: false })
+        this.setState({ activealerts: false });
+    }
+
+    handleLogin = () => {
+        this.setState({ loggedIn: true });
     }
 
     render() {
@@ -26,7 +31,7 @@ class Home extends React.Component {
                 <Header/>
                 <div class="row">
                     <div class="col">
-                        <LoginSignup/>
+                        {this.state.loggedIn ? <text>heyyoo</text> : <LoginSignup onLogin={this.handleLogin}/>}
                     </div>
                     <div class="col">
                         <NewAlert/>

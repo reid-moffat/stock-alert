@@ -17,9 +17,11 @@ class LoginForm extends React.Component {
         signIn(event.target.email.value, event.target.password.value)
             .then(() => {
                 this.setState({loggedIn: true});
+                this.props.onLogin();
             })
         if (sessionStorage.getItem("uid") != null) {
             this.setState({loggedIn: true})
+            this.props.onLogin();
         }
         event.preventDefault();
     }

@@ -22,12 +22,16 @@ class LoginSignup extends React.Component {
         this.setState({signup: true});
     }
 
+    handleLogin = () => {
+        this.props.onLogin();
+    }
+
     // Renders login/sign up form based on state
     renderAuthForm = () => {
         if (this.state.signup) {
             return (
                 <>
-                    <SignupForm/>
+                    <SignupForm onLogin={this.handleLogin}/>
                     Already have an account? <button class="login-line-button" onClick={this.toLogin}>Login</button>
                 </>
             );
@@ -35,7 +39,7 @@ class LoginSignup extends React.Component {
 
         return (
             <>
-                <LoginForm/>
+                <LoginForm onLogin={this.handleLogin}/>
                 Don't have an account? <button class="login-line-button" onClick={this.toSignup}>Sign up</button>
             </>
         );
