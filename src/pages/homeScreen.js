@@ -2,7 +2,7 @@ import React from 'react';
 import ActiveAlerts from '../components/activeAlerts.js';
 import NewAlert from '../components/newAlert.js';
 import Header from '../components/header.js';
-import LoginSignup from './auth.js';
+import LoginSignup from '../components/auth.js';
 import "../styles/home.css";
 
 class Home extends React.Component {

@@ -1,8 +1,7 @@
 import React from 'react';
 
-import LoginForm from '../components/loginForm.js';
-import SignupForm from '../components/signup.js';
-import Header from '../components/header.js';
+import LoginForm from './loginForm.js';
+import SignupForm from './signup.js';
 import "../styles/loginSignup.css";
 
 class LoginSignup extends React.Component {
