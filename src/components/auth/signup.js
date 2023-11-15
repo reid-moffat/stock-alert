@@ -31,7 +31,7 @@ class SignupForm extends React.Component {
                 <div class="form-title">Sign up</div>
                 <form onSubmit={this.handleSubmit}>
                     <label>Email</label><br/>
-                    <input type="text" class="field" name="email" onSubm/>
+                    <input type="text" class="field" name="email"/>
                     <br/>
                     <label>Password</label><br/>
                     <input type="password" class="field" name="password"/>
