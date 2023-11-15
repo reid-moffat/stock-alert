@@ -30,7 +30,11 @@ class LoginForm extends React.Component {
                         <input type="text" class="field" name="email"/>
                         <br/>
                         <label style={{ 'float': 'left' }}>Password</label>
-                        <span style={{ 'float': 'right' }}><button class={'forgot-password-button'} onClick={this.props.forgotPassword}>Forgot Password?</button></span>
+                        <span style={{ 'float': 'right' }}>
+                            <button class={'forgot-password-button'} onClick={this.props.forgotPassword}>
+                                Forgot Password?
+                            </button>
+                        </span>
                         <br/>
                         <input type="password" class="field" name="password"/>
                         <br/>
@@ -38,7 +42,9 @@ class LoginForm extends React.Component {
                     </form>
                 </div>
                 <br/>
-                Don't have an account? <button class="login-line-button" onClick={this.props.toSignup}>Sign up</button>
+                <text>
+                    Don't have an account? <button class="login-line-button" onClick={this.props.toSignup}>Sign up</button>
+                </text>
             </>
         );
     }

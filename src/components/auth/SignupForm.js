@@ -35,7 +35,9 @@ class SignupForm extends React.Component {
                         <input className="form-btn btn" type="submit" value="Sign Up"/>
                     </form>
                 </div>
-                Already have an account? <button class="login-line-button" onClick={this.props.toLogin}>Login</button>
+                <text>
+                    Already have an account? <button class="login-line-button" onClick={this.props.toLogin}>Login</button>
+                </text>
             </>
         );
     }
