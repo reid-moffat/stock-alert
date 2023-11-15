@@ -27,7 +27,6 @@ class SignupForm extends React.Component {
 
         return (
             <div class="form">
-
                 <div class="form-title">Sign up</div>
                 <form onSubmit={this.handleSubmit}>
                     <label>Email</label><br/>

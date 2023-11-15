@@ -1,14 +1,14 @@
 import React from 'react';
 import NewAlert from '../components/alerts/newAlert.js';
 import Header from '../components/header.js';
-import LoginSignup from '../components/auth/auth.js';
+import LoginSignup from '../components/auth/LoginSignup.js';
 import "../styles/home.css";
 
 class Home extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            activealerts: true
+            activealerts: true,
         };
     }
 

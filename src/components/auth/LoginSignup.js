@@ -1,6 +1,6 @@
 import React from 'react';
-import LoginForm from './loginForm.js';
-import SignupForm from './signup.js';
+import LoginForm from './LoginForm.js';
+import SignupForm from './SignupForm.js';
 import "../../styles/loginSignup.css";
 
 class LoginSignup extends React.Component {
