@@ -2,6 +2,9 @@ import { HttpsError, onCall } from "firebase-functions/v2/https";
 import { auth, sendEmail } from "./helpers";
 import { logger }  from "firebase-functions";
 
+/**
+ * Created a new user account (email & password)
+ */
 const createAccount = onCall((request) => {
     // Create user (will throw an error if the email is already in use)
     return auth
@@ -26,11 +29,26 @@ const createAccount = onCall((request) => {
     }
 );
 
+/**
+ * Send an email with a link to reset their password to the specified user
+ */
 const sendPasswordResetEmail = onCall(async (request) => {
 
+    // Generate link
     const emailAddress: string = request.data.email;
-    const link: string = await auth.generatePasswordResetLink(emailAddress);
+    const link: string = await auth.generatePasswordResetLink(emailAddress)
+        .catch((err) => {
+            if (err.message === "RESET_PASSWORD_EXCEED_LIMIT") {
+                logger.error('Too many password reset requests');
+                throw new HttpsError('resource-exhausted', 'Too many password rest requests. Please try again later');
+            }
 
+            logger.error(`Error creating email link: ${err}`);
+            throw new HttpsError('internal', 'Error creating email, please try again later');
+        });
+    logger.info(`Successfully generated password reset link ${link}`);
+
+    // Construct email
     const subject = 'Reset your password for Stock Alert';
     const body = `<p style="font-size: 16px;">A password reset request was made for your account</p>
                    <p style="font-size: 16px;">Reset your password here: ${link}</p>
@@ -38,14 +56,15 @@ const sendPasswordResetEmail = onCall(async (request) => {
                    <p style="font-size: 12px;">Best Regards,</p>
                    <p style="font-size: 12px;">-The Stock Alert team</p>`;
 
+    // Create email document & handle result
     return sendEmail(emailAddress, subject, body)
         .then(() => {
-            logger.log(`Password reset email created for ${emailAddress}`);
-            return `Password reset email created for ${emailAddress}`;
+            logger.log(`Password reset email successfully created for ${emailAddress}`);
+            return `Password reset email successfully created for ${emailAddress}`;
         })
         .catch((err) => {
             logger.log(`Error creating password reset email for ${emailAddress}: ${err}`);
-            return `Error creating password reset email for ${emailAddress}`;
+            throw new HttpsError('internal', 'Error creating email, please try again later');
         });
 });
 
