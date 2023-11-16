@@ -2,6 +2,7 @@ import React from 'react';
 import { getAlerts } from '../../backend/endpoints.js'
 import "../../styles/home.css";
 import { Vortex } from "react-loader-spinner";
+import SpinningLoader from "../Visuals/SpinningLoader";
 
 class ActiveAlerts extends React.Component {
     constructor(props) {
@@ -53,8 +54,7 @@ class ActiveAlerts extends React.Component {
 
     renderAlerts = (isActive) => {
         if (this.state.list.length === 0) {
-            return <Vortex colors={['#eea76a', '#b84410', '#eea76a', '#b84410', '#b84410', '#eea76a']} width={50}
-                           height={50} visible={this.state.loading}/>;
+            return <SpinningLoader loading={this.state.loading}/>;
         }
 
         return <div className="alerts-container">
