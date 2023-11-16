@@ -1,5 +1,6 @@
 import React from 'react';
-import { signIn } from '../../backend/endpoints.js'
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../backend/firebase";
 
 class LoginForm extends React.Component {
     constructor(props) {
@@ -9,14 +10,8 @@ class LoginForm extends React.Component {
     }
 
     handleSubmit = (event) => {
-        // SUBMIT BUTTON EVENT HANDLER
-        signIn(event.target.email.value, event.target.password.value)
-            .then(() => {
-                this.props.onLogin();
-            })
-        if (sessionStorage.getItem("uid") != null) {
-            this.props.onLogin();
-        }
+        signInWithEmailAndPassword(auth, event.target.email.value, event.target.password.value)
+            .then(() => this.props.onLogin())
         event.preventDefault();
     }
 
