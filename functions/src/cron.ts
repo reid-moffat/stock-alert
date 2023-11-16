@@ -65,4 +65,53 @@ const checkAlerts = onSchedule({
     logger.info(`===== Cron job checkAlerts ending (${new Date()}) =====`);
 });
 
-export { checkAlerts };
+/**
+ * Every day at midnight, delete old data in the database
+ * -Remove
+ */
+const cleanOldData = onSchedule({
+    schedule: '*/5 * * * *'
+}, async () => {
+
+    logger.info(`===== Cron job cleanOldData starting (${new Date()}) =====`);
+
+    const thirtyDaysAgo = new Date();
+    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+
+    logger.log(`Getting all emails successfully sent 30+ days ago (before ${thirtyDaysAgo})...`);
+
+    const expiredEmails = await getCollection('/emails/')
+        .where('delivery.state', '==', 'SUCCESS')
+        .where('delivery.endTime', '<=', thirtyDaysAgo)
+        .where('delivery.error', '==', null)
+        .get()
+        .then((result) => result.docs)
+        .catch((err) => { throw new HttpsError('internal', `Failed to query expired emails: ${err}`); });
+
+    logger.info(`Successfully queried ${expiredEmails.length} expired emails`);
+
+    if (expiredEmails.length === 0) {
+        logger.info(`No expired emails found, quitting cron...`);
+        logger.info(`===== Cron job cleanOldData ending (${new Date()}) =====`);
+        return;
+    }
+
+    logger.info(`Concurrently deleting expired emails...`);
+
+    logger.info("");
+    const deletions = Promise.all(expiredEmails.map((email) => {
+        return email.ref.delete()
+            .then(() => logger.info(`--- Successfully deleted email ${email.id} ---`))
+            .catch((err) => logger.error(`Error deleting email document ${email.id}: ${err}`));
+    }));
+
+    return deletions
+        .then(() => {
+            logger.info("");
+            logger.info(`Successfully deleted ${expiredEmails.length} expired emails`);
+            logger.info(`===== Cron job cleanOldData ending (${new Date()}) =====`);
+        })
+        .catch((err) => logger.error(`Error deleting expired emails: ${err}`));
+});
+
+export { checkAlerts, cleanOldData };

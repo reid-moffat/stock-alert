@@ -12,6 +12,16 @@
 
 import { addAlert, deleteAlert, getAlerts, getStockPrice } from './alertManagement';
 import { createAccount, onUserCreate, sendPasswordResetEmail } from "./auth";
-import { checkAlerts } from "./cron";
+import { checkAlerts, cleanOldData } from "./cron";
 
-export { getAlerts, createAccount, onUserCreate, sendPasswordResetEmail, addAlert, deleteAlert, checkAlerts, getStockPrice };
+export {
+    getAlerts,
+    createAccount,
+    onUserCreate,
+    sendPasswordResetEmail,
+    addAlert,
+    deleteAlert,
+    checkAlerts,
+    cleanOldData,
+    getStockPrice
+};
