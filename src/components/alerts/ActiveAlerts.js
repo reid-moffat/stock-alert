@@ -1,9 +1,9 @@
 import React from 'react';
-import { getAlerts } from '../../backend/endpoints.js'
 import "../../styles/home.css";
 import SpinningLoader from "../Visuals/SpinningLoader";
 import { auth } from "../../backend/firebase";
 import { signOut } from "firebase/auth";
+import { getFunctions, httpsCallable } from "firebase/functions";
 
 class ActiveAlerts extends React.Component {
     constructor(props) {
@@ -14,16 +14,12 @@ class ActiveAlerts extends React.Component {
     }
 
     async componentDidMount() {
-        const test = await getAlerts();
-        console.log('After results: ' + JSON.stringify(test, null, 4));
-        for (let i = 0; i < test.length; i++) {
-            this.setState({list: [...this.state.list, test[i]]})
-        }
-        console.log(this.state.list)
+        const alerts = await httpsCallable(getFunctions(), 'getAlerts')();
+        this.setState({ list: alerts.data })
     }
 
     navNew = () => {
-        this.setState({activealerts: false})
+        this.setState({ activealerts: false })
     }
 
     // Convert unix time (from firebase) to readable date
