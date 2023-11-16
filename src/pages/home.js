@@ -4,12 +4,13 @@ import Header from '../components/header.js';
 import LoginSignup from '../components/auth/LoginSignup.js';
 import "../styles/home.css";
 import ActiveAlerts from "../components/alerts/ActiveAlerts";
+import { auth } from "../backend/firebase";
 
 class Home extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            loggedIn: false,
+            loggedIn: auth.currentUser !== null,
         };
     }
 
