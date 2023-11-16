@@ -67,10 +67,10 @@ const checkAlerts = onSchedule({
 
 /**
  * Every day at midnight, delete old data in the database
- * -Remove
+ * -Remove old emails (sent successfully 30+ days ago)
  */
 const cleanOldData = onSchedule({
-    schedule: '*/5 * * * *'
+    schedule: '0 0 * * *'
 }, async () => {
 
     logger.info(`===== Cron job cleanOldData starting (${new Date()}) =====`);
