@@ -1,5 +1,5 @@
 import React from 'react';
-import { signUp } from '../../backend/endpoints.js'
+import { getFunctions, httpsCallable } from "firebase/functions";
 
 class SignupForm extends React.Component {
     constructor(props) {
@@ -9,8 +9,11 @@ class SignupForm extends React.Component {
     }
 
     handleSubmit = (event) => {
-        // SUBMIT BUTTON EVENT HANDLER
-        signUp(event.target.email.value, event.target.password.value)
+        httpsCallable(getFunctions(), 'createAccount')({ email: event.target.email.value, password: event.target.password.value })
+            .then()
+            .catch((err) => {
+                console.log(`Error: ${err}`);
+            });
         if (sessionStorage.getItem("uid") != null) {
             this.props.onLogin();
         }
