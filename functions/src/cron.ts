@@ -7,7 +7,7 @@ const checkAlerts = onSchedule({
     secrets: ["STOCK_API_URL", "STOCK_API_KEY", "STOCK_API_HOST"]
 }, async (event) => {
 
-    logger.info('Cron job checkAlerts starting...');
+    logger.info(`===== Cron job checkAlerts starting (${new Date()}) =====`);
 
     let errorOccurred = false;
     let alertsSent = 0;
@@ -59,8 +59,9 @@ const checkAlerts = onSchedule({
         throw new Error("Error checking/sending alerts; see logs above");
     }
 
-    if (alertsSent > 0) logger.info("");
+    if (alertsSent > 0) logger.info('');
     logger.info(`Cron job checkAlerts successfully completed. ${activeAlerts.length} alerts checked, ${plural(alertsSent, 'alert')} sent`);
+    logger.info(`===== Cron job checkAlerts ending (${new Date()}) =====`);
 });
 
 export { checkAlerts };
