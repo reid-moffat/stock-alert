@@ -1,6 +1,7 @@
 import React from 'react';
-import { Vortex } from 'react-loader-spinner';
 import { getFunctions, httpsCallable } from "firebase/functions";
+import SpinningLoader from "../Visuals/SpinningLoader";
+import { FiArrowLeft } from "react-icons/fi";
 
 class ForgotPassword extends React.Component {
 
@@ -43,8 +44,8 @@ class ForgotPassword extends React.Component {
                     <input type="text" class="field" name="email"/>
                     <br/>
                     <input type="submit" class="form-btn btn" value="Send link"/>
+                    <SpinningLoader loading={this.state.loading}/>
                     {this.renderMessage()}
-                    {this.state.loading && <Vortex colors={['#eea76a', '#b84410', '#eea76a', '#b84410', '#b84410', '#eea76a']} width={50} height={50}/>}
                 </form>
             </div>
         );
