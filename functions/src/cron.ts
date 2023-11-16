@@ -1,7 +1,11 @@
 import { onSchedule } from "firebase-functions/v2/scheduler";
 import { getCollection, getDoc, plural, sendEmail, stockPriceHelper } from "./helpers";
 import { logger } from "firebase-functions";
+import { HttpsError } from "firebase-functions/v2/https";
 
+/**
+ * Every 5 minutes, check each active alert to see if the stock has hit the target
+ */
 const checkAlerts = onSchedule({
     schedule: '*/5 * * * *',
     secrets: ["STOCK_API_URL", "STOCK_API_KEY", "STOCK_API_HOST"]
@@ -11,6 +15,8 @@ const checkAlerts = onSchedule({
 
     let errorOccurred = false;
     let alertsSent = 0;
+
+    logger.info("Querying all active alerts...");
 
     const activeAlerts = await getCollection('/alerts/')
         .where('active', '==', true)
@@ -30,11 +36,6 @@ const checkAlerts = onSchedule({
     for (const alert of activeAlerts) {
         try {
             const stockPrice = await stockPriceHelper(alert.ticker);
-
-            if (alert.increase !== true && alert.increase !== false) {
-                errorOccurred = true;
-                logger.error(`Invalid alert.increase value for alert with id '${alert.id}': ${alert.increase}`);
-            }
 
             if ((alert.increase === true && stockPrice > alert.target) || (alert.increase === false && stockPrice < alert.target)) {
                 logger.info("");
@@ -56,7 +57,7 @@ const checkAlerts = onSchedule({
     }
 
     if (errorOccurred) {
-        throw new Error("Error checking/sending alerts; see logs above");
+        throw new HttpsError('internal', "Error checking/sending alerts; see logs above");
     }
 
     if (alertsSent > 0) logger.info('');
