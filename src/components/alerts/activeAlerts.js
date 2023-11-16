@@ -1,6 +1,7 @@
 import React from 'react';
 import { getAlerts } from '../../backend/endpoints.js'
 import "../../styles/home.css";
+import { Vortex } from "react-loader-spinner";
 
 class ActiveAlerts extends React.Component {
     constructor(props) {
@@ -51,18 +52,24 @@ class ActiveAlerts extends React.Component {
     }
 
     renderAlerts = (isActive) => {
-        return this.state.list.map((item, index) => item.active === isActive &&
-            <div className="stock">
-                <div className="stock-row">
-                    <span className="stock-name">{item.ticker}</span>
-                    <span className="target">Target Price: {item.target}</span>
-                </div>
-                <div className="stock-row">
-                    <span className="date">📅 {this.getDate(item.time)}</span>
-                    {/*<span class="current">Current Price: {item.current}<br/></span>*/}
-                </div>
-            </div>
-        );
+        if (this.state.list.length === 0) {
+            return <Vortex colors={['#eea76a', '#b84410', '#eea76a', '#b84410', '#b84410', '#eea76a']} width={50}
+                           height={50} visible={this.state.loading}/>;
+        }
+
+        return <div className="alerts-container">
+            {this.state.list.map((item, index) => item.active === isActive &&
+                <div className="stock">
+                    <div className="stock-row">
+                        <span className="stock-name">{item.ticker}</span>
+                        <span className="target">Target Price: {item.target}</span>
+                    </div>
+                    <div className="stock-row">
+                        <span className="date">📅 {this.getDate(item.time)}</span>
+                        {/*<span class="current">Current Price: {item.current}<br/></span>*/}
+                    </div>
+                </div>)}
+        </div>;
     }
 
     render() {
@@ -71,16 +78,12 @@ class ActiveAlerts extends React.Component {
                 <div class="stock-row">
                     <h2>Active Alerts 🚨</h2>
                 </div>
-                <div class="alerts-container">
-                    {this.renderAlerts(true)}
-                </div>
+                {this.renderAlerts(true)}
 
                 <div className="stock-row">
                     <h2>Completed Alerts</h2>
                 </div>
-                <div className="alerts-container">
-                    {this.renderAlerts(false)}
-                </div>
+                {this.renderAlerts(false)}
             </div>
         );
     }
