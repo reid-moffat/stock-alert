@@ -1,8 +1,9 @@
 import React from 'react';
 import { getAlerts } from '../../backend/endpoints.js'
 import "../../styles/home.css";
-import { Vortex } from "react-loader-spinner";
 import SpinningLoader from "../Visuals/SpinningLoader";
+import { auth } from "../../backend/firebase";
+import { signOut } from "firebase/auth";
 
 class ActiveAlerts extends React.Component {
     constructor(props) {
@@ -72,9 +73,19 @@ class ActiveAlerts extends React.Component {
         </div>;
     }
 
+    logOut = () => {
+        signOut(auth)
+            .then(() => this.props.onLogout())
+            .catch(() => {});
+    }
+
     render() {
         return (
             <div className="alert">
+                <h4>Signed in as 18rem8@queensu.ca</h4>
+                <button class="form-btn btn" onClick={this.logOut}>Log out</button>
+                <br/>
+
                 <div class="stock-row">
                     <h2>Active Alerts 🚨</h2>
                 </div>
