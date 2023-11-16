@@ -31,7 +31,7 @@ class Home extends React.Component {
                         {this.state.loggedIn ? <ActiveAlerts onLogout={this.handleSignOut}/> : <LoginSignup onLogin={this.handleLogin}/>}
                     </div>
                     <div class="col">
-                        <NewAlert/>
+                        <NewAlert loggedIn={this.state.loggedIn}/>
                     </div>
                 </div>
 

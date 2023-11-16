@@ -45,21 +45,19 @@ class NewAlert extends React.Component {
 
     render() {
         return (
-            <>
-                <div class="new-alert">
-                    <h1>New Alert</h1>
+            <div class="new-alert">
+                <h1>New Alert</h1>
+                {!this.props.loggedIn && <label>Email</label>}
+                {!this.props.loggedIn && <input type="email" name="email" class="field"/>}
+                <label>Stock Name</label>
+                <input type="text" name="stock" class="field" style={{'text-transform': 'uppercase'}}
+                       onKeyDown={(e) => this.stockTickerInput(e)} onChange={(e) => this.stockChange(e)}/>
+                <label> Alert Price </label>
+                <input type="number" name="target" class="field" onChange={this.targetChange}/>
 
-                    <label>Email</label>
-                    <input type="email" name="email" class="field"/>
-                    <label>Stock Name</label>
-                    <input type="text" name="stock" class="field" style={{'text-transform': 'uppercase'}}
-                           onKeyDown={(e) => this.stockTickerInput(e)} onChange={(e) => this.stockChange(e)}/>
-                    <label> Alert Price </label>
-                    <input type="number" name="target" class="field" onChange={this.targetChange}/>
-                    {this.state.errorMessage && <h3 style={{color: 'red'}}>{this.state.errorMessage}</h3>}
-                    <input type="submit" class="add-btn btn" value="Add Alert" onClick={this.handleSubmit}/>
-                </div>
-            </>
+                {this.state.errorMessage && <h3 style={{color: 'red'}}>{this.state.errorMessage}</h3>}
+                <input type="submit" class="add-btn btn" value="Add Alert" onClick={this.handleSubmit}/>
+            </div>
         );
     }
 }
