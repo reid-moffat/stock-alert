@@ -1,7 +1,7 @@
 import React from 'react';
-import { addAlert } from '../../backend/endpoints.js';
 import "../../styles/custom.scss";
 import "../../styles/home.css";
+import { getFunctions, httpsCallable } from "firebase/functions";
 
 class NewAlert extends React.Component {
     constructor(props) {
@@ -19,19 +19,11 @@ class NewAlert extends React.Component {
     }
 
     handleSubmit = async (event) => {
-        event.preventDefault();
-        // SUBMIT BUTTON EVENT HANDLER
-        console.log(this.state.stock)
-
-        let today = new Date();
-        const dd = String(today.getDate()).padStart(2, '0');
-        const mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-        const yyyy = today.getFullYear();
-
-        today = mm + '/' + dd + '/' + yyyy;
-        const result = await addAlert({ticker: this.state.stock, target: this.state.target})
+        httpsCallable(getFunctions(), 'addAlert')({ticker: this.state.stock, target: this.state.target})
+            .then(() => {})
             .catch((err) => this.setState({errorMessage: err.message}));
-        console.log("Add alert result: " + JSON.stringify(result, null, 4));
+
+        event.preventDefault();
     }
 
     // Skips all non-letters for stock input
