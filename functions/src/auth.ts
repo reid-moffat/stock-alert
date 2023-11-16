@@ -1,5 +1,5 @@
 import { HttpsError, onCall } from "firebase-functions/v2/https";
-import { auth, sendEmail } from "./helpers";
+import { auth, getCollection, sendEmail } from "./helpers";
 import { logger }  from "firebase-functions";
 
 /**
@@ -34,8 +34,26 @@ const createAccount = onCall((request) => {
  */
 const sendPasswordResetEmail = onCall(async (request) => {
 
-    // Generate link
+
     const emailAddress: string = request.data.email;
+
+    // If email doesn't exist, don't notify the user to prevent enumeration attacks
+    await getCollection('/users/')
+        .where('email', '==', 'emailAddress')
+        .get()
+        .then((result) => {
+            if (result.docs.length === 0) {
+                logger.info(`Requesting email ${emailAddress} does not exist`);
+                return `If the email ${emailAddress} exists, a link was sent`;
+            }
+            return null;
+        })
+        .catch((err) => {
+            logger.error(`Error checking if the email ${emailAddress} exists: ${err}`);
+            throw new HttpsError('internal', 'Error creating email, please try again later');
+        });
+
+    // Generate link
     const link: string = await auth.generatePasswordResetLink(emailAddress)
         .catch((err) => {
             if (err.message === "RESET_PASSWORD_EXCEED_LIMIT") {
@@ -59,11 +77,11 @@ const sendPasswordResetEmail = onCall(async (request) => {
     // Create email document & handle result
     return sendEmail(emailAddress, subject, body)
         .then(() => {
-            logger.log(`Password reset email successfully created for ${emailAddress}`);
-            return `Password reset email successfully created for ${emailAddress}`;
+            logger.info(`Password reset email successfully created for ${emailAddress}`);
+            return `If the email ${emailAddress} exists, a link was sent`;
         })
         .catch((err) => {
-            logger.log(`Error creating password reset email for ${emailAddress}: ${err}`);
+            logger.info(`Error creating password reset email for ${emailAddress}: ${err}`);
             throw new HttpsError('internal', 'Error creating email, please try again later');
         });
 });
