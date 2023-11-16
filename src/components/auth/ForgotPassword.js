@@ -38,6 +38,7 @@ class ForgotPassword extends React.Component {
     render() {
         return (
             <div class="form" style={{ 'display': 'inline-block' }}>
+                <FiArrowLeft onClick={this.props.toLogin}/>
                 <div class="form-title">Reset password</div>
                 <form onSubmit={this.handleSubmit}>
                     <label>Email</label><br/>
