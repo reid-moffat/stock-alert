@@ -4,7 +4,7 @@ import SpinningLoader from "../Visuals/SpinningLoader";
 import { auth } from "../../backend/firebase";
 import { signOut } from "firebase/auth";
 import { getFunctions, httpsCallable } from "firebase/functions";
-import { FiArrowRight } from "react-icons/fi";
+import { FiArrowRight, FiTrash } from "react-icons/fi";
 
 class ActiveAlerts extends React.Component {
     constructor(props) {
@@ -13,6 +13,7 @@ class ActiveAlerts extends React.Component {
             list: [],
             active: true, // Viewing active alerts
             search: '',
+            deleteAlert: '',
         };
     }
 
@@ -66,10 +67,41 @@ class ActiveAlerts extends React.Component {
                     </div>
                     <div className="stock-row">
                         <span className="date">📅 {this.getDate(item.time)}</span>
-                        {/*<span class="current">Current Price: {item.current}<br/></span>*/}
+                        {this.state.deleteAlert === item.id
+                            ? <span className="current">
+                                <text style={{ color: 'red' }}>Delete? </text>
+                                <button style={{ color: 'red', borderRadius: '10px', background: 'white' }} onClick={this.confirmDeleteAlert}>
+                                    Yes
+                                </button>
+                                {" "}
+                                <button style={{ color: 'black', borderRadius: '10px', background: 'white' }} onClick={this.closeDeleteAlertConfirm}>
+                                    No
+                                </button>
+                              </span>
+                            : <span className="current">
+                                <FiTrash cursor="pointer" onClick={() => this.deleteAlertConfirm(item.id)}/>
+                              </span>
+                        }
                     </div>
                 </div>)}
         </div>;
+    }
+
+    deleteAlertConfirm = (id) => {
+        this.setState({ deleteAlert: id });
+    }
+
+    closeDeleteAlertConfirm = () => {
+        this.setState({ deleteAlert: '' });
+    }
+
+    confirmDeleteAlert = () => {
+        httpsCallable(getFunctions(), 'deleteAlert')({ alertId: this.state.deleteAlert })
+            .then(() => {
+                console.log(`Successfully deleted alert ${this.state.deleteAlert}`);
+                this.setState({ list: this.state.list.filter(e => e.id !== this.state.deleteAlert), deleteAlert: '' });
+            })
+            .catch((err) => console.log(`Error deleting alert: ${err}`));
     }
 
     logOut = () => {

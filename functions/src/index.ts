@@ -10,7 +10,7 @@
 // Start writing functions
 // https://firebase.google.com/docs/functions/typescript
 
-import { addAlert, deleteAlert, getAlerts, getStockPrice } from './alertManagement';
+import { addAlert, deleteAlert, getAlerts } from './alertManagement';
 import { createAccount, onUserCreate, sendPasswordResetEmail } from "./auth";
 import { checkAlerts, cleanOldData } from "./cron";
 
@@ -23,5 +23,4 @@ export {
     deleteAlert,
     checkAlerts,
     cleanOldData,
-    getStockPrice
 };

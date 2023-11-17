@@ -27,6 +27,7 @@ const getAlerts = onCall((request) => {
             return query.docs.map(doc => {
                 const alert = doc.data();
                 return {
+                    id: doc.id,
                     ticker: alert.ticker,
                     time: doc.data().time._seconds,
                     increase: alert.increase,
