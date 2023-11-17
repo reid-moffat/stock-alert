@@ -80,13 +80,34 @@ const addAlert = onCall({ secrets: ["STOCK_API_URL", "STOCK_API_KEY", "STOCK_API
 
 const deleteAlert = onCall(async (request) => {
 
+    logger.info('Function deleteAlert starting, verifying params...')
+
     const id = request.data.alertId;
+
+    if (!id) {
+        logger.error(`request.data.alertId is not defined: ${id}`);
+        throw new HttpsError('invalid-argument', `Must pass in an alert ID. Value: ${id}`);
+    }
+    const regex = "^[a-zA-Z0-9]{20}$";
+    if (typeof id !== 'string' || !id.match(regex)) {
+        logger.error(`request.data.alertId is not a string or doesn't match regex ${regex}`);
+        throw new HttpsError('invalid-argument', 'Alert ID must be a 20-character long alphanumeric string');
+    }
+
     await verifyDocPermission(request, `/alerts/${id}/`);
+
+    logger.info(`Alert ${id} passed verification, deleting...`);
 
     return getDoc(`/alerts/${id}/`)
         .delete()
-        .then(() => `Successfully deleted alert with ID ${id}`)
-        .catch((err) => `Error deleting alert with ID '${id}': ${err}`);
+        .then(() => {
+            logger.info(`Successfully deleted alert with ID ${id}`);
+            return `Successfully deleted alert with ID ${id}`;
+        })
+        .catch((err) => {
+            logger.error(`Error deleting alert with ID '${id}': ${err}`)
+            return `Error deleting alert with ID '${id}'`;
+        });
 });
 
-export { getAlerts, addAlert, deleteAlert, getStockPrice };
+export { getAlerts, addAlert, deleteAlert };
