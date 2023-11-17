@@ -38,14 +38,6 @@ const getAlerts = onCall((request) => {
         .catch((err) => `Error getting alerts: ${err}`);
 });
 
-const getStockPrice = onCall({secrets: ["STOCK_API_URL", "STOCK_API_KEY", "STOCK_API_HOST"]},
-    (request) => {
-
-        verifyIsAuthenticated(request);
-
-        return stockPriceHelper(request.data.ticker);
-    });
-
 const addAlert = onCall({ secrets: ["STOCK_API_URL", "STOCK_API_KEY", "STOCK_API_HOST"] },
     async (request) => {
 
