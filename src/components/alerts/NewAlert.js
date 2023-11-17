@@ -19,7 +19,7 @@ class NewAlert extends React.Component {
     }
 
     handleSubmit = async (event) => {
-        httpsCallable(getFunctions(), 'addAlert')({ticker: this.state.stock, target: this.state.target})
+        httpsCallable(getFunctions(), 'addAlert')({email: this.state.email, ticker: this.state.stock, target: this.state.target})
             .then(() => {})
             .catch((err) => this.setState({errorMessage: err.message}));
 
@@ -31,6 +31,10 @@ class NewAlert extends React.Component {
         if (!event.key.match(/[a-z]/i)) {
             event.preventDefault();
         }
+    }
+
+    emailChange(event) {
+        this.setState({ email: event.target.value });
     }
 
     // Updates stock ticker value (ignores non-letters)
@@ -48,7 +52,7 @@ class NewAlert extends React.Component {
             <div class="new-alert">
                 <h1>New Alert</h1>
                 {!this.props.loggedIn && <label>Email</label>}
-                {!this.props.loggedIn && <input type="email" name="email" class="field"/>}
+                {!this.props.loggedIn && <input type="email" name="email" class="field" onChange={(e) => this.emailChange(e)}/>}
                 <label>Stock Name</label>
                 <input type="text" name="stock" class="field" style={{'text-transform': 'uppercase'}}
                        onKeyDown={(e) => this.stockTickerInput(e)} onChange={(e) => this.stockChange(e)}/>
