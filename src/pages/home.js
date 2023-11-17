@@ -36,7 +36,7 @@ class Home extends React.Component {
         httpsCallable(getFunctions(), 'deleteAlert')({ alertId: alertId })
             .then(() => {
                 console.log(`Successfully deleted alert ${alertId}`);
-                this.setState({ list: this.state.alerts.filter(e => e.id !== this.state.alertId), deleteAlert: '' });
+                this.setState({ alerts: this.state.alerts.filter(e => e.id !== this.state.alertId) });
             })
             .catch((err) => console.log(`Error deleting alert: ${err}`));
     }
@@ -51,7 +51,7 @@ class Home extends React.Component {
                             ? <ActiveAlerts
                                 onLogout={this.handleSignOut}
                                 setAlerts={this.setAlerts}
-                                deleteAlert={this.state.deleteAlert}
+                                deleteAlert={this.deleteAlert}
                                 alerts={this.state.alerts}
                             />
                             : <LoginSignup onLogin={this.handleLogin}/>

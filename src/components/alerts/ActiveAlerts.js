@@ -49,7 +49,6 @@ class ActiveAlerts extends React.Component {
     }
 
     renderAlerts = (isActive) => {
-        console.log("Alerts:" + JSON.stringify(this.props.alerts, null, 4));
         if (this.props.alerts.length === 0) {
             return <SpinningLoader loading={this.state.loading}/>;
         }
