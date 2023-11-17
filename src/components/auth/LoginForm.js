@@ -14,26 +14,18 @@ class LoginForm extends React.Component {
     }
 
     handleSubmit = async (event) => {
-        event.preventDefault();
-
-        if (event.target.email.value) {
-            ;
-        }
-        if (!event.target.password.value) {
-            this.setState({ message: 'Please enter a password' });
-            return;
-        }
-        if (event.target.password.value.length < 6) {
-            ;
-        }
-
         await this.setState({ loading: true });
         signInWithEmailAndPassword(auth, event.target.email.value, event.target.password.value)
             .then(() => this.props.onLogin())
             .catch(async (err) => {
-                console.log(`Error code: ${err.code} Message: ${err.message} All: ${JSON.stringify(err, null, 4)}`);
-                await this.setState({ loading: false });
+                if (err.code === 'auth/invalid-email' || err.code === 'auth/invalid-login-credentials') {
+                    await this.setState({ loading: false, message: 'Invalid email and/or password' });
+                } else {
+                    await this.setState({ loading: false, message: 'An error occurred, please try again later' });
+                }
             });
+
+        event.preventDefault();
     }
 
     renderMessage = () => {
@@ -48,7 +40,7 @@ class LoginForm extends React.Component {
                     <div class="form-title">Log in</div>
                     <form onSubmit={this.handleSubmit}>
                         <label>Email</label><br/>
-                        <input type="text" class="field" name="email"/>
+                        <input type="text" class="field" name="email" required/>
                         <br/>
                         <label style={{ 'float': 'left' }}>Password</label>
                         <span style={{ 'float': 'right' }}>
