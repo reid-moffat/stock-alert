@@ -4,12 +4,14 @@ import SpinningLoader from "../Visuals/SpinningLoader";
 import { auth } from "../../backend/firebase";
 import { signOut } from "firebase/auth";
 import { getFunctions, httpsCallable } from "firebase/functions";
+import { FiArrowRight } from "react-icons/fi";
 
 class ActiveAlerts extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            list: []
+            list: [],
+            active: true, // Viewing active alerts
         };
     }
 
@@ -75,6 +77,14 @@ class ActiveAlerts extends React.Component {
             .catch(() => {});
     }
 
+    toActive = () => {
+        this.setState({ active: true });
+    }
+
+    toCompleted = () => {
+        this.setState({ active: false });
+    }
+
     render() {
         return (
             <div className="alert">
@@ -83,14 +93,17 @@ class ActiveAlerts extends React.Component {
                 <br/>
 
                 <div class="stock-row">
-                    <h2>Active Alerts 🚨</h2>
+                    <h2>{this.state.active ? "Active Alerts 🚨" : "Completed Alerts"}</h2>
                 </div>
-                {this.renderAlerts(true)}
+                {this.renderAlerts(this.state.active)}
 
+                <br/>
                 <div className="stock-row">
-                    <h2>Completed Alerts</h2>
+                    <h4>
+                        {this.state.active ? "Completed Alerts" : "Active Alerts 🚨"} {"  "}
+                        <FiArrowRight onClick={this.state.active ? this.toCompleted : this.toActive}/>
+                    </h4>
                 </div>
-                {this.renderAlerts(false)}
             </div>
         );
     }
