@@ -24,7 +24,16 @@ const getAlerts = onCall((request) => {
                 return [];
             }
 
-            return query.docs.map(doc => ({...doc.data(), time: doc.data().time._seconds}));
+            return query.docs.map(doc => {
+                const alert = doc.data();
+                return {
+                    ticker: alert.ticker,
+                    time: doc.data().time._seconds,
+                    increase: alert.increase,
+                    target: alert.target,
+                    active: alert.active,
+                };
+            });
         })
         .catch((err) => `Error getting alerts: ${err}`);
 });
