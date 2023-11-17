@@ -43,40 +43,54 @@ const addAlert = onCall({ secrets: ["STOCK_API_URL", "STOCK_API_KEY", "STOCK_API
     async (request) => {
 
     logger.info(`Starting function addAlert...`);
-    verifyIsAuthenticated(request);
 
-    logger.info(`Verifying input...`);
+    const loggedIn = request.auth && request.auth.uid;
+    if (!loggedIn) {
+        if (!request.data.email) {
+            throw new HttpsError('invalid-argument', `Must provide an email for non-logged in users`);
+        }
+    }
+
+    logger.info(`Verifying ticker & target are valid...`);
+
     if (!request.data.ticker || !/[A-Z]+/.test(request.data.ticker)) {
         throw new HttpsError('invalid-argument', `Alert ticker invalid; must be all uppercase letters. Value: ${request.data.ticker}`);
     }
-    if (!/^[0-9]+.[0-9]{2}$/.test(request.data.target) && +request.data.target !== 0) {
-        throw new HttpsError('invalid-argument', `Alert target must be a number. Value: ${request.data.target}`);
-    }
-    if (+request.data.target <= 0) {
+    if ((!/^[0-9]+(.[0-9]{2})?$/.test(request.data.target) && +request.data.target !== 0) || +request.data.target <= 0) {
         throw new HttpsError('invalid-argument', `Alert target must be a positive number. Value: ${request.data.target}`);
     }
 
     logger.info(`Verify stock ticker exists...`);
+
     await stockPriceHelper(request.data.ticker);
 
     logger.info(`Setting up alert object...`);
+
     const newAlert = {
         ticker: request.data.ticker,
         increase: true,
         target: request.data.target,
         time: admin.firestore.Timestamp.now(),
         active: true,
-        // @ts-ignore
-        userId: request.auth.uid,
-        // @ts-ignore
-        email: (await auth.getUser(request.auth.uid)).email
     };
+    if (loggedIn) {
+        // @ts-ignore
+        newAlert.userId = request.auth.uid;
+        // @ts-ignore
+        newAlert.email = (await auth.getUser(request.auth.uid)).email;
+    } else {
+        // @ts-ignore
+        newAlert.email = request.data.email;
+    }
 
     logger.info(`Adding alert object to database: ${JSON.stringify(newAlert)}`);
     return getCollection('/alerts/')
         .add(newAlert)
         .then((docRef) => (docRef.id))
-        .catch((e) => `Failed to add alert: ${JSON.stringify(e)}`);
+        .catch((err) => {
+            logger.error(`Failed to add alert: ${err}`);
+            return `Failed to add alert; please try again later`;
+        });
 });
 
 const deleteAlert = onCall(async (request) => {
