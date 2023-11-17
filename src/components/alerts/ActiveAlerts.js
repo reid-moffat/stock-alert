@@ -10,7 +10,6 @@ class ActiveAlerts extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            list: [],
             active: true, // Viewing active alerts
             search: '',
             deleteAlert: '',
@@ -19,9 +18,10 @@ class ActiveAlerts extends React.Component {
 
     async componentDidMount() {
         const alerts = await httpsCallable(getFunctions(), 'getAlerts')();
-        this.setState({ list: alerts.data })
+        this.props.setAlerts(alerts);
     }
 
+    // TODO: Remove
     navNew = () => {
         this.setState({ activealerts: false })
     }
@@ -54,12 +54,13 @@ class ActiveAlerts extends React.Component {
     }
 
     renderAlerts = (isActive) => {
-        if (this.state.list.length === 0) {
+        console.log("Alerts:" + JSON.stringify(this.props.alerts, null, 4));
+        if (this.props.alerts.length === 0) {
             return <SpinningLoader loading={this.state.loading}/>;
         }
 
         return <div className="alerts-container">
-            {this.state.list.map((item, index) => item.active === isActive && item.ticker.includes(this.state.search) &&
+            {this.props.alerts.data.map((item, index) => item.active === isActive && item.ticker.includes(this.state.search) &&
                 <div className="stock">
                     <div className="stock-row">
                         <span className="stock-name">{item.ticker}</span>
@@ -70,7 +71,7 @@ class ActiveAlerts extends React.Component {
                         {this.state.deleteAlert === item.id
                             ? <span className="current">
                                 <text style={{ color: 'red' }}>Delete? </text>
-                                <button style={{ color: 'red', borderRadius: '10px', background: 'white' }} onClick={this.confirmDeleteAlert}>
+                                <button style={{ color: 'red', borderRadius: '10px', background: 'white' }} onClick={() => this.props.deleteAlert(this.state.deleteAlert)}>
                                     Yes
                                 </button>
                                 {" "}
@@ -93,15 +94,6 @@ class ActiveAlerts extends React.Component {
 
     closeDeleteAlertConfirm = () => {
         this.setState({ deleteAlert: '' });
-    }
-
-    confirmDeleteAlert = () => {
-        httpsCallable(getFunctions(), 'deleteAlert')({ alertId: this.state.deleteAlert })
-            .then(() => {
-                console.log(`Successfully deleted alert ${this.state.deleteAlert}`);
-                this.setState({ list: this.state.list.filter(e => e.id !== this.state.deleteAlert), deleteAlert: '' });
-            })
-            .catch((err) => console.log(`Error deleting alert: ${err}`));
     }
 
     logOut = () => {
