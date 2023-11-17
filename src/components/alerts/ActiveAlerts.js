@@ -21,11 +21,6 @@ class ActiveAlerts extends React.Component {
         this.props.setAlerts(alerts);
     }
 
-    // TODO: Remove
-    navNew = () => {
-        this.setState({ activealerts: false })
-    }
-
     // Convert unix time (from firebase) to readable date
     getDate = (timestamp) => {
         const date = new Date(timestamp * 1000);
