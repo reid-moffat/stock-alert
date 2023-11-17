@@ -34,10 +34,7 @@ class Home extends React.Component {
 
     deleteAlert = (alertId) => {
         httpsCallable(getFunctions(), 'deleteAlert')({ alertId: alertId })
-            .then(() => {
-                console.log(`Successfully deleted alert ${alertId}`);
-                this.setState({ alerts: this.state.alerts.filter(e => e.id !== this.state.alertId) });
-            })
+            .then(() => this.setState({ alerts: this.state.alerts.filter(e => e.id !== alertId) }))
             .catch((err) => console.log(`Error deleting alert: ${err}`));
     }
 

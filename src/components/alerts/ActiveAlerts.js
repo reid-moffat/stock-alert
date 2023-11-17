@@ -18,7 +18,7 @@ class ActiveAlerts extends React.Component {
 
     async componentDidMount() {
         const alerts = await httpsCallable(getFunctions(), 'getAlerts')();
-        this.props.setAlerts(alerts);
+        this.props.setAlerts(alerts.data);
     }
 
     // Convert unix time (from firebase) to readable date
@@ -54,7 +54,7 @@ class ActiveAlerts extends React.Component {
         }
 
         return <div className="alerts-container">
-            {this.props.alerts.data.map((item, index) => item.active === isActive && item.ticker.includes(this.state.search) &&
+            {this.props.alerts.map((item, index) => item.active === isActive && item.ticker.includes(this.state.search) &&
                 <div className="stock">
                     <div className="stock-row">
                         <span className="stock-name">{item.ticker}</span>
