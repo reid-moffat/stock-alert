@@ -109,4 +109,4 @@ class ActiveAlerts extends React.Component {
     }
 }
 
-export default ActiveAlerts
+export default ActiveAlerts;

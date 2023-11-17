@@ -64,6 +64,8 @@ h2 {
 .alerts-container {
     background-color: #EDEDED;
     border-radius: 12px;
+    overflow-y: scroll;
+    height: 415px;
 }
 
 .stock {
