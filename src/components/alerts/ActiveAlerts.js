@@ -12,6 +12,7 @@ class ActiveAlerts extends React.Component {
         this.state = {
             list: [],
             active: true, // Viewing active alerts
+            search: '',
         };
     }
 
@@ -57,7 +58,7 @@ class ActiveAlerts extends React.Component {
         }
 
         return <div className="alerts-container">
-            {this.state.list.map((item, index) => item.active === isActive &&
+            {this.state.list.map((item, index) => item.active === isActive && item.ticker.includes(this.state.search) &&
                 <div className="stock">
                     <div className="stock-row">
                         <span className="stock-name">{item.ticker}</span>
@@ -85,6 +86,10 @@ class ActiveAlerts extends React.Component {
         this.setState({ active: false });
     }
 
+    handleSearch = (event) => {
+        this.setState({ search: event.target.value.toUpperCase() });
+    }
+
     render() {
         return (
             <div className="alert">
@@ -95,15 +100,14 @@ class ActiveAlerts extends React.Component {
                 <div class="stock-row">
                     <h2>{this.state.active ? "Active Alerts 🚨" : "Completed Alerts"}</h2>
                 </div>
+                <input type="text" className="field" name="search" placeholder="Search..." style={{'text-transform': 'uppercase'}} onChange={this.handleSearch}/>
                 {this.renderAlerts(this.state.active)}
 
                 <br/>
-                <div className="stock-row">
-                    <h4>
-                        {this.state.active ? "Completed Alerts" : "Active Alerts 🚨"} {"  "}
-                        <FiArrowRight onClick={this.state.active ? this.toCompleted : this.toActive}/>
-                    </h4>
-                </div>
+                <h4>
+                    {this.state.active ? "Completed Alerts" : "Active Alerts 🚨"} {"  "}
+                    <FiArrowRight onClick={this.state.active ? this.toCompleted : this.toActive}/>
+                </h4>
             </div>
         );
     }
