@@ -53,6 +53,37 @@ class ActiveAlerts extends React.Component {
             return <SpinningLoader loading={this.state.loading}/>;
         }
 
+        // Shows option to delete an alert
+        const deleteAlert = (item) => {
+            // Completed alerts can't be deleted
+            if (!item.active) {
+                return;
+            }
+
+            // If the trash can was clicked, show a confirmation menu
+            if (this.state.deleteAlert === item.id) {
+                return (
+                    <span className="current">
+                        <text style={{ color: 'red' }}>Delete? </text>
+                        <button style={{ color: 'red', borderRadius: '10px', background: 'white' }} onClick={() => this.props.deleteAlert(this.state.deleteAlert)}>
+                            Yes
+                        </button>
+                        {" "}
+                        <button style={{ color: 'black', borderRadius: '10px', background: 'white' }} onClick={this.closeDeleteAlertConfirm}>
+                            No
+                        </button>
+                      </span>
+                );
+            }
+
+            // Otherwise, show the trash can icon
+            return (
+                <span className="current">
+                    <FiTrash cursor="pointer" onClick={() => this.deleteAlertConfirm(item.id)}/>
+                </span>
+            );
+        }
+
         return <div className="alerts-container">
             {this.props.alerts.map((item, index) => item.active === isActive && item.ticker.includes(this.state.search) &&
                 <div className="stock">
@@ -62,21 +93,7 @@ class ActiveAlerts extends React.Component {
                     </div>
                     <div className="stock-row">
                         <span className="date">📅 {this.getDate(item.time)}</span>
-                        {this.state.deleteAlert === item.id
-                            ? <span className="current">
-                                <text style={{ color: 'red' }}>Delete? </text>
-                                <button style={{ color: 'red', borderRadius: '10px', background: 'white' }} onClick={() => this.props.deleteAlert(this.state.deleteAlert)}>
-                                    Yes
-                                </button>
-                                {" "}
-                                <button style={{ color: 'black', borderRadius: '10px', background: 'white' }} onClick={this.closeDeleteAlertConfirm}>
-                                    No
-                                </button>
-                              </span>
-                            : <span className="current">
-                                <FiTrash cursor="pointer" onClick={() => this.deleteAlertConfirm(item.id)}/>
-                              </span>
-                        }
+                        {deleteAlert(item)}
                     </div>
                 </div>)}
         </div>;
