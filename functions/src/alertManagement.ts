@@ -109,9 +109,19 @@ const deleteAlert = onCall(async (request) => {
         throw new HttpsError('invalid-argument', 'Alert ID must be a 20-character long alphanumeric string');
     }
 
+    logger.info(`Parameters passed verification, checking document is valid...`);
+
     await verifyDocPermission(request, `/alerts/${id}/`);
 
-    logger.info(`Alert ${id} passed verification, deleting...`);
+    const doc = await getDoc(`/alerts/${id}/`).get();
+
+    // @ts-ignore
+    if (!doc.data().active) {
+        logger.error(`Document ${id} has already been triggered and can't be deleted`);
+        throw new HttpsError('invalid-argument', `Document ${id} has already been triggered and can't be deleted`);
+    }
+
+    logger.info(`Document is valid, deleting...`);
 
     return getDoc(`/alerts/${id}/`)
         .delete()
