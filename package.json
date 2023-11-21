@@ -19,7 +19,8 @@
   },
   "scripts": {
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
+    "deploy-site": "gh-pages -d build",
+    "deploy-api": "firebase deploy --only functions",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
