@@ -18,6 +18,7 @@
     "web-vitals": "^3.4.0"
   },
   "scripts": {
+    "preinstall": "npx only-allow pnpm",
     "predeploy": "npm run build",
     "deploy-site": "gh-pages -d build",
     "deploy-api": "firebase deploy --only functions",
