@@ -4,7 +4,6 @@
   "private": true,
   "homepage": "https://reid-moffat.github.io/stock-alert/",
   "dependencies": {
-    "axios": "^1.5.0",
     "bootstrap": "^5.3.2",
     "firebase": "^10.4.0",
     "react": "^18.2.0",
@@ -14,7 +13,6 @@
     "react-router": "^6.2.1",
     "react-router-dom": "^6.2.1",
     "react-scripts": "^5.0.0",
-    "sass": "^1.68.0",
     "web-vitals": "^3.4.0"
   },
   "scripts": {
