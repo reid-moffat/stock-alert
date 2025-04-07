@@ -63,13 +63,13 @@ const verifyDocPermission = async (context: CallableContext, path: string) => {
 const stockPriceHelper = async (ticker: string) : Promise<String> => {
 
     // Verifies secret values are present
-    const secrets: string[] = [
+    const requiredSecrets: string[] = [
         "STOCK_API_URL",
         "STOCK_API_KEY",
         "STOCK_API_HOST"
     ];
 
-    for (const secret of secrets) {
+    for (const secret of requiredSecrets) {
         const secretValue: string | undefined = process.env[secret];
 
         if (secretValue === undefined) {
@@ -93,17 +93,20 @@ const stockPriceHelper = async (ticker: string) : Promise<String> => {
         },
     };
 
-    return axios.request(stockApiReq)
-        .then((rsp) => rsp.data.price)
-        .catch((err: any) => {
-            if (err.response.data === "Invalid Stock Ticker") {
-                logger.info(`Attempted to check invalid stock ticker: ${ticker}`);
-                throw new HttpsError('not-found', `Stock ticker ${ticker} is invalid`);
-            }
+    try {
+        const rsp = await axios.request(stockApiReq);
+        return rsp.data.price;
+    } catch (err: any) {
+        // Handle 404 errors specifically
+        if (err.response && err.response.status === 404) {
+            logger.info(`Attempted to check invalid stock ticker: ${ticker}`);
+            throw new HttpsError('not-found', `Stock ticker ${ticker} is invalid`);
+        }
 
-            logger.error(`Error getting stock price for ${ticker}: ${stringifyObject(err)}`);
-            throw new HttpsError('internal', `Error getting stock price for ${ticker}, please try again later`);
-        });
+        // For debugging, log the full error object in a safe way
+        logger.error(`Error getting stock price for ${ticker}: ${JSON.stringify(err, Object.getOwnPropertyNames(err))}`);
+        throw new HttpsError('internal', `Error getting stock price for ${ticker}, please try again later`);
+    }
 };
 
 // Sends an email with the given data to the given user ID
