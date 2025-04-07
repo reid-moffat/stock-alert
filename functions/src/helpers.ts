@@ -138,4 +138,4 @@ const stringifyObject = (obj: object) => {
     });
 }
 
-export { auth, getCollection, getDoc, verifyIsAuthenticated, verifyDocPermission, sendEmail, stockPriceHelper, plural };
+export { auth, getCollection, getDoc, verifyIsAuthenticated, verifyDocPermission, sendEmail, stockPriceHelper, plural, stringifyObject };
